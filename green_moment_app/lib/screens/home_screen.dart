@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../models/app_data_model.dart';
-import '../services/mock_data_service.dart';
-import '../services/notification_service.dart';
-import '../services/settings_service.dart';
+import '../services/api_service.dart';
 import '../widgets/app_header.dart';
 import '../widgets/carbon_intensity_ring.dart';
 import '../widgets/status_card.dart';
@@ -22,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen>
   AppDataModel? _appData;
   bool _isRefreshing = false;
   bool _isModalOpen = false;
-  bool _notificationEnabled = true;
 
   @override
   void initState() {
@@ -31,21 +28,6 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Future<void> _initializeApp() async {
-    // Initialize notification service
-    await NotificationService.initialize();
-    await NotificationService.requestPermissions();
-    
-    // Load notification settings
-    final enabled = await SettingsService.getNotificationEnabled();
-    setState(() {
-      _notificationEnabled = enabled;
-    });
-    
-    // Schedule notifications if enabled
-    if (enabled) {
-      await NotificationService.scheduleDailyFetchAndNotification();
-    }
-    
     // Load initial data
     await _loadInitialData();
   }
@@ -53,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen>
   Future<void> _loadInitialData() async {
     setState(() => _isRefreshing = true);
     try {
-      final data = await MockDataService.fetchCarbonData();
+      final data = await ApiService.fetchCarbonData();
       if (mounted) {
         setState(() {
           _appData = data;
@@ -63,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen>
     } catch (e) {
       if (mounted) {
         setState(() => _isRefreshing = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('無法連接到伺服器: ${e.toString()}'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
       }
     }
   }
@@ -72,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen>
     
     setState(() => _isRefreshing = true);
     try {
-      final data = await MockDataService.fetchCarbonData();
+      final data = await ApiService.fetchCarbonData();
       if (mounted) {
         setState(() {
           _appData = data;
@@ -82,6 +70,12 @@ class _HomeScreenState extends State<HomeScreen>
     } catch (e) {
       if (mounted) {
         setState(() => _isRefreshing = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('無法更新資料: ${e.toString()}'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
       }
     }
   }
@@ -96,19 +90,6 @@ class _HomeScreenState extends State<HomeScreen>
     setState(() => _isModalOpen = false);
   }
 
-  Future<void> _onNotificationToggle(bool enabled) async {
-    setState(() {
-      _notificationEnabled = enabled;
-    });
-    
-    await SettingsService.setNotificationEnabled(enabled);
-    await NotificationService.rescheduleIfEnabled();
-    
-    // Show a test notification if enabled
-    if (enabled) {
-      await NotificationService.showTestNotification();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +113,9 @@ class _HomeScreenState extends State<HomeScreen>
               
               // Main content
               Expanded(
-                child: Padding(
+                child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 40),
                       
@@ -153,9 +133,9 @@ class _HomeScreenState extends State<HomeScreen>
                         recommendation: _appData?.recommendation,
                         isLoading: _isRefreshing,
                         onForecastTap: _openForecastModal,
-                        notificationEnabled: _notificationEnabled,
-                        onNotificationToggle: _onNotificationToggle,
                       ),
+                      
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

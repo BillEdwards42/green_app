@@ -1,0 +1,49 @@
+[2025-07-30 17:28:45] Fetching generation data from Taipower...
+[2025-07-30 17:28:46] Fetched data for 188 active generators
+[2025-07-30 17:28:46] Data timestamp: 2025-07-30 17:20:00+08:00
+[2025-07-30 17:28:46] Found 188 new generators: 中威大安, 中能風, 中部小水力, 允湖, 允西, 其它台電自有, 其它購電太陽能, 其它購電小水力, 其它購電風力, 創維風, 北部小水力, 卑南, 卓蘭#1, 卓蘭#2, 協和#3, 協和#4, 南部CC#1, 南部CC#2, 南部CC#3, 南部CC#4, 南部小水力, 南鹽光, 台中#1, 台中#10, 台中#2, 台中#3, 台中#4, 台中#5, 台中#6, 台中#7, 台中#8, 台中#9, 台中CC#1, 台中Gas1&amp;2, 台中Gas3&amp;4, 台中港, 台電自有地熱, 名間, 向陽光, 和平#1, 和平#2, 嘉南西口、烏山頭和八田, 嘉惠#1, 嘉惠#2, 四湖, 國光#1, 大林#1, 大林#2, 大林#5, 大林#6, 大潭CC#1, 大潭CC#2, 大潭CC#3, 大潭CC#4, 大潭CC#5, 大潭CC#6, 大潭CC#7, 大潭CC#8, 大潭CC#9, 大觀一#1, 大觀一#2, 大觀一#3, 大觀一#4, 大觀一#5, 大觀二#1, 大觀二#2, 大觀二#3, 大觀二#4, 天篷光, 天英光, 天衝光, 天輪#1, 天輪#2, 天輪#3, 天輪#4, 天輪#5, 寶興光, 崙尾光, 廷和光, 彰工, 彰濱光, 德基#1, 德基#2, 德基#3, 志光光, 捷祥關山, 新和光, 新桃#1, 新源崙背, 明潭#1, 明潭#2, 明潭#3, 明潭#4, 明潭#5, 明潭#6, 星元#1, 星崙光, 星崴光, 星彰#1, 星股光, 昱昶光, 曾文#1, 東部小水力, 松林#1&amp;2, 林口#1, 林口#2, 林口#3, 核三#2, 核三Gas1, 核三Gas2, 核二Gas1, 核二Gas2, 水里#1, 永堯光, 汽電共生, 沃一風, 沃二風, 沃南風, 海洋竹南, 海湖#1, 海湖#2, 海能風, 澎湖尖山, 烏來&amp;桂山&amp;粗坑, 王功, 生利光, 生質能, 石門#1, 石門#2, 碧海, 碩力光, 立霧#1&amp;#2, 義興#1, 翡翠#1, 聯華光, 興達#1, 興達#2, 興達#3, 興達#4, 興達CC#1, 興達CC#2, 興達CC#3, 興達CC#4, 興達CC#5, 興達新CC#1, 興達新CC#2, 芳一風, 芳二風, 苗栗大鵬, 萬大#1, 萬大#2, 萬大#3, 萬大#4, 觀園, 觀威觀音&amp;桃威新屋, 谷關#1, 谷關#2, 谷關#3, 谷關#4, 豐德#1, 豐德#2, 豐德#3, 購電地熱, 通霄CC#1, 通霄CC#2, 通霄CC#3, 通霄CC#6, 通霄GT#9, 金門塔山, 鉅工#1, 鉅工#2, 離岸一期, 離島其他, 雲麥, 電池, 青山#1, 青山#2, 青山#3, 青山#4, 馬祖珠山, 馬鞍#1, 馬鞍#2, 鹿威彰濱, 麥寮#1, 麥寮#3, 龍A風, 龍澗#1, 龍澗#2
+[2025-07-30 17:28:46] Created new generator tracking file
+[2025-07-30 17:28:46] Total generation: 35520.1 MW
+[2025-07-30 17:28:46] Active generators: 188
+[2025-07-30 17:31:50] Fetching generation data from Taipower...
+[2025-07-30 17:31:52] Fetched data for 188 active generators
+[2025-07-30 17:31:52] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:31:52] Created new generator tracking file with 188 generators
+[2025-07-30 17:31:52] Total generation: 35520.1 MW
+[2025-07-30 17:31:52] Active generators: 188
+[2025-07-30 17:32:07] Fetching generation data from Taipower...
+[2025-07-30 17:32:07] Fetched data for 188 active generators
+[2025-07-30 17:32:07] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:32:07] Appended data: 188 active generators, 188 total columns
+[2025-07-30 17:32:07] Total generation: 35520.1 MW
+[2025-07-30 17:32:07] Active generators: 188
+[2025-07-30 17:32:32] Fetching generation data from Taipower...
+[2025-07-30 17:32:32] Fetched data for 188 active generators
+[2025-07-30 17:32:32] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:32:32] Created new generator tracking file with 188 generators
+[2025-07-30 17:32:32] Total generation: 35520.1 MW
+[2025-07-30 17:32:32] Active generators: 188
+[2025-07-30 17:32:38] Fetching generation data from Taipower...
+[2025-07-30 17:32:39] Fetched data for 188 active generators
+[2025-07-30 17:32:39] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:32:39] Appended data: 188 active generators, 188 total columns
+[2025-07-30 17:32:39] Total generation: 35520.1 MW
+[2025-07-30 17:32:39] Active generators: 188
+[2025-07-30 17:33:01] Fetching generation data from Taipower...
+[2025-07-30 17:33:01] Fetched data for 188 active generators
+[2025-07-30 17:33:01] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:33:01] Created new generator tracking file with 188 generators
+[2025-07-30 17:33:01] Total generation: 35520.1 MW
+[2025-07-30 17:33:01] Active generators: 188
+[2025-07-30 17:33:07] Fetching generation data from Taipower...
+[2025-07-30 17:33:08] Fetched data for 188 active generators
+[2025-07-30 17:33:08] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:33:08] Appended data: 188 active generators, 188 total columns
+[2025-07-30 17:33:08] Total generation: 35520.1 MW
+[2025-07-30 17:33:08] Active generators: 188
+[2025-07-30 17:34:59] Fetching generation data from Taipower...
+[2025-07-30 17:34:59] Fetched data for 188 active generators
+[2025-07-30 17:34:59] Data timestamp: 2025-07-30 17:30:00+08:00
+[2025-07-30 17:34:59] Created new generator tracking file with 188 generators
+[2025-07-30 17:34:59] Total generation: 35391.3 MW
+[2025-07-30 17:34:59] Active generators: 188

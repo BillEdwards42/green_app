@@ -5,7 +5,6 @@ import '../models/app_data_model.dart';
 import '../models/carbon_intensity_model.dart';
 import '../models/forecast_data_model.dart';
 import '../models/recommendation_model.dart';
-import 'mock_data_service.dart';
 
 class ApiService {
   static final Map<String, String> _headers = {
@@ -23,9 +22,9 @@ class ApiService {
   /// Fetch current carbon data and forecast
   static Future<AppDataModel> fetchCarbonData() async {
     try {
-      // First, try to get the forecast which includes current data
+      // First, try to get the latest data which includes current and forecast
       final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.carbonForecast}'),
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.carbonLatest}'),
         headers: _headers,
       ).timeout(ApiConfig.timeout);
 
@@ -34,13 +33,11 @@ class ApiService {
         return AppDataModel.fromJson(data);
       } else {
         print('API Error: Status ${response.statusCode}');
-        // Fallback to mock data
-        return MockDataService.fetchCarbonData();
+        throw Exception('Failed to fetch carbon data: Status ${response.statusCode}');
       }
     } catch (e) {
       print('API Error: $e');
-      // Fallback to mock data for development
-      return MockDataService.fetchCarbonData();
+      throw Exception('Failed to connect to server: $e');
     }
   }
 

@@ -62,6 +62,9 @@ STATIONS_BY_REGION = {
 # Fields to extract and average
 TARGET_FIELDS = ["SunshineDuration", "AirTemperature", "WindSpeed", "Precipitation"]
 
+# All fields to extract for comprehensive station data
+ALL_STATION_FIELDS = ["AirTemperature", "WindSpeed", "SunshineDuration", "Precipitation", "UVIndex", "WindDirection"]
+
 # --- Helper Functions ---
 def ensure_directories():
     """Create necessary directories if they don't exist."""
@@ -120,6 +123,60 @@ def round_to_nearest_10min(dt):
     minutes = (dt.minute // 10) * 10
     return dt.replace(minute=minutes, second=0, microsecond=0)
 
+def save_all_stations_data(all_stations_data, obs_datetime):
+    """Save comprehensive weather data for all stations in wide format."""
+    all_stations_file = STRU_DATA_DIR / "all_stations_weather.csv"
+    
+    # Prepare data dictionary with DateTime as first column
+    row_data = {"DateTime": obs_datetime}
+    
+    # Process each station
+    for station in all_stations_data:
+        station_name = station.get("StationName")
+        if not station_name:
+            continue
+            
+        elements = station.get("WeatherElement", {})
+        
+        # Extract all fields for this station
+        for field in ALL_STATION_FIELDS:
+            column_name = f"{station_name}_{field}"
+            
+            if field == "Precipitation":
+                # Special handling for precipitation (nested in "Now")
+                value = elements.get("Now", {}).get("Precipitation")
+            else:
+                value = elements.get(field)
+            
+            # Convert to float, handling null values
+            float_value = safe_float_convert(value)
+            row_data[column_name] = float_value if float_value is not None else ""
+    
+    # Create DataFrame with single row
+    new_df = pd.DataFrame([row_data])
+    
+    # Check if file exists and append or create new
+    if all_stations_file.exists():
+        try:
+            # Read existing data
+            existing_df = read_csv_with_lock(all_stations_file)
+            
+            # Check if this timestamp already exists
+            if obs_datetime in existing_df['DateTime'].values:
+                print(f"⚠️ Data for {obs_datetime} already exists in all_stations_weather.csv. Skipping.")
+                return
+            
+            # Append new row
+            combined_df = pd.concat([existing_df, new_df], ignore_index=True)
+            write_csv_with_lock(combined_df, all_stations_file)
+            print(f"✅ Appended new data to all_stations_weather.csv")
+        except Exception as e:
+            print(f"❌ Error updating all_stations_weather.csv: {e}")
+    else:
+        # Create new file
+        write_csv_with_lock(new_df, all_stations_file)
+        print(f"✅ Created new all_stations_weather.csv with {len(row_data)-1} station metrics")
+
 def get_latest_timestamp_from_csvs():
     """Get the most recent timestamp from regional CSV files."""
     latest_timestamp = None
@@ -150,6 +207,25 @@ def process_and_update_data(api_data):
     except KeyError:
         print("❌ ERROR: Could not find valid 'records' or 'Station' structure in API data.")
         return
+    
+    # Extract common observation datetime from first station
+    obs_datetime = None
+    if all_stations_data:
+        first_station = all_stations_data[0]
+        obs_time_str = first_station.get("ObsTime", {}).get("DateTime")
+        if obs_time_str:
+            try:
+                # Parse the datetime string and format it consistently
+                from datetime import datetime as dt
+                obs_dt = dt.fromisoformat(obs_time_str.replace('+08:00', ''))
+                obs_datetime = obs_dt.strftime('%Y-%m-%d %H:%M:%S')
+            except:
+                obs_datetime = obs_time_str
+    
+    # Save comprehensive data for all stations
+    if obs_datetime:
+        print("\n📊 Saving comprehensive station data...")
+        save_all_stations_data(all_stations_data, obs_datetime)
 
     # Get the latest timestamp from existing CSV files
     target_timestamp = get_latest_timestamp_from_csvs()
@@ -179,6 +255,10 @@ def process_and_update_data(api_data):
         precip_value = elements.get("Now", {}).get("Precipitation")
         precip = safe_float_convert(precip_value)
         
+        # Extract additional fields
+        uv_index = safe_float_convert(elements.get("UVIndex"))
+        wind_dir = safe_float_convert(elements.get("WindDirection"))
+        
         has_null = any(v is None for v in [temp, wind, sunshine, precip])
         
         processed_stations[station_name] = {
@@ -186,6 +266,8 @@ def process_and_update_data(api_data):
             "WindSpeed": wind,
             "SunshineDuration": sunshine,
             "Precipitation": precip,
+            "UVIndex": uv_index,
+            "WindDirection": wind_dir,
             "ObsTime": obs_time_str
         }
 

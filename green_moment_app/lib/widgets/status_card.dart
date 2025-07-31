@@ -8,8 +8,6 @@ class StatusCard extends StatefulWidget {
   final RecommendationModel? recommendation;
   final bool isLoading;
   final VoidCallback onForecastTap;
-  final bool notificationEnabled;
-  final Function(bool) onNotificationToggle;
 
   const StatusCard({
     super.key,
@@ -17,8 +15,6 @@ class StatusCard extends StatefulWidget {
     this.recommendation,
     required this.isLoading,
     required this.onForecastTap,
-    required this.notificationEnabled,
-    required this.onNotificationToggle,
   });
 
   @override
@@ -121,104 +117,105 @@ class _StatusCardState extends State<StatusCard> {
               ),
             ),
             
-            // Action section
+            // Action section with enhanced design
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Recommendation section
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '最佳用電時段',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textMuted.withValues(alpha: 0.8),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    
-                    if (widget.isLoading)
-                      // Loading state
-                      const Text(
-                        '獲取最新資料...',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textMuted,
-                        ),
-                      )
-                    else if (widget.recommendation != null)
-                      // Normal recommendation display
-                      ShaderMask(
-                        shaderCallback: (bounds) => const LinearGradient(
-                          colors: [AppColors.accent, AppColors.accentLight],
-                        ).createShader(bounds),
-                        child: Text(
-                          '${widget.recommendation!.startTime} - ${widget.recommendation!.endTime}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    else
-                      // Fallback
-                      const Text(
-                        '資料載入中',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textMuted,
-                        ),
-                      ),
-                  ],
-                ),
-                
-                const SizedBox(height: 12),
-                
-                // Notification toggle section
+                // Recommendation section with improved visual hierarchy
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.textPrimary.withValues(alpha: 0.03),
-                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.accent.withValues(alpha: 0.08),
+                        AppColors.accent.withValues(alpha: 0.03),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: AppColors.textPrimary.withValues(alpha: 0.08),
+                      color: AppColors.accent.withValues(alpha: 0.2),
+                      width: 1,
                     ),
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.notifications_outlined,
-                        size: 16,
-                        color: AppColors.textSecondary,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            size: 16,
+                            color: AppColors.accent,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '最佳用電時段',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.accent,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          '減碳提醒',
+                      const SizedBox(height: 8),
+                      
+                      if (widget.isLoading)
+                        // Loading state
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              '更新中...',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        )
+                      else if (widget.recommendation != null)
+                        // Normal recommendation display with gradient
+                        ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [AppColors.accent, AppColors.accentLight],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ).createShader(bounds),
+                          child: Text(
+                            '${widget.recommendation!.startTime} - ${widget.recommendation!.endTime}',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                        )
+                      else
+                        // Fallback
+                        Text(
+                          '-- : -- - -- : --',
                           style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.textSecondary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textMuted.withValues(alpha: 0.5),
+                            letterSpacing: -0.5,
                           ),
                         ),
-                      ),
-                      Transform.scale(
-                        scale: 0.8,
-                        child: Switch(
-                          value: widget.notificationEnabled,
-                          onChanged: widget.onNotificationToggle,
-                          activeColor: AppColors.accent,
-                          activeTrackColor: AppColors.accent.withValues(alpha: 0.3),
-                          inactiveThumbColor: AppColors.textMuted,
-                          inactiveTrackColor: AppColors.textMuted.withValues(alpha: 0.2),
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                      ),
                     ],
                   ),
                 ),

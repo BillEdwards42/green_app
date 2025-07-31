@@ -3,7 +3,7 @@ import '../constants/app_colors.dart';
 import '../constants/appliance_data.dart';
 import '../models/appliance_model.dart';
 import '../models/forecast_data_model.dart';
-import '../services/mock_data_service.dart';
+import '../services/api_service.dart';
 import '../services/user_progress_service.dart';
 import '../widgets/background_pattern.dart';
 
@@ -101,7 +101,7 @@ class _LoggerScreenState extends State<LoggerScreen> {
   }
 
   Future<void> _loadForecastData() async {
-    final appData = await MockDataService.fetchCarbonData();
+    final appData = await ApiService.fetchCarbonData();
     setState(() {
       _forecastData = appData.forecast;
       _lastFetchTime = DateTime.now();

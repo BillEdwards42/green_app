@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Stack(
           children: [
@@ -103,161 +104,168 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             
-            // Main content
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 80),
+            // Main content with flexible layout
+            Column(
+              children: [
+                const SizedBox(height: 80),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                   
-                  // Header section
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: AppColors.greenGlow,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: AppColors.green.withValues(alpha: 0.3),
-                            width: 1,
-                          ),
-                        ),
-                        child: const Text(
-                          '🌱 Welcome',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.green,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      
-                      const Text(
-                        '使用 Google 登入',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                          height: 1.2,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      
-                      const Text(
-                        '您的資料將會儲存並同步至各裝置，\n讓您的減碳紀錄不再遺失',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.textSecondary,
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 48),
-                  
-                  // Username input section
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '用戶名稱（選填）',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: AppColors.border,
-                            width: 1,
-                          ),
-                          color: AppColors.surface,
-                        ),
-                        child: TextField(
-                          controller: _usernameController,
-                          style: const TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: '輸入用戶名稱或留空自動產生',
-                            hintStyle: TextStyle(
-                              color: AppColors.textSecondary.withValues(alpha: 0.7),
-                              fontSize: 16,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(20),
-                            prefixIcon: Icon(
-                              Icons.person_outline,
-                              color: AppColors.textSecondary.withValues(alpha: 0.7),
-                              size: 22,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      
-                      Text(
-                        '可使用繁體中文或英文字符',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textSecondary.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 32),
-                  
-                  // Error message
-                  if (_errorMessage != null)
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      margin: const EdgeInsets.only(bottom: 24),
-                      decoration: BoxDecoration(
-                        color: AppColors.red.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.red.withValues(alpha: 0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: AppColors.red,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              _errorMessage!,
-                              style: const TextStyle(
-                                color: AppColors.red,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                        // Header section
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.greenGlow,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: AppColors.green.withValues(alpha: 0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: const Text(
+                                '🌱 Welcome',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.green,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
+                            const SizedBox(height: 24),
+                            
+                            const Text(
+                              '使用 Google 登入',
+                              style: TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                                height: 1.2,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            
+                            const Text(
+                              '您的資料將會儲存並同步至各裝置，\n讓您的減碳紀錄不再遺失',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.textSecondary,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                  
+                        const SizedBox(height: 48),
+                        
+                        // Username input section
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '用戶名稱（選填）',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: AppColors.border,
+                                  width: 1,
+                                ),
+                                color: AppColors.surface,
+                              ),
+                              child: TextField(
+                                controller: _usernameController,
+                                style: const TextStyle(
+                                  color: AppColors.textPrimary,
+                                  fontSize: 16,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: '輸入用戶名稱或留空自動產生',
+                                  hintStyle: TextStyle(
+                                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.all(20),
+                                  prefixIcon: Icon(
+                                    Icons.person_outline,
+                                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                                    size: 22,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            
+                            Text(
+                              '可使用繁體中文或英文字符',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary.withValues(alpha: 0.8),
+                              ),
+                            ),
+                          ],
+                        ),
+                  
+                        const SizedBox(height: 32),
+                        
+                        // Error message
+                        if (_errorMessage != null)
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            margin: const EdgeInsets.only(bottom: 24),
+                            decoration: BoxDecoration(
+                              color: AppColors.red.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: AppColors.red.withValues(alpha: 0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: AppColors.red,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    _errorMessage!,
+                                    style: const TextStyle(
+                                      color: AppColors.red,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                  
+                      ],
                     ),
-                  
-                  const Spacer(),
-                  
-                  // Sign in button
-                  Container(
+                  ),
+                ),
+                // Sign in button (stays at bottom)
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Container(
                     height: 56,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
@@ -324,10 +332,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  
-                  const SizedBox(height: 32),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

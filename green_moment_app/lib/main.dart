@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/main_screen.dart';
 import 'screens/auth/welcome_screen.dart';
-import 'services/notification_service.dart';
 import 'services/user_progress_service.dart';
 import 'services/auth_service.dart';
 
@@ -9,7 +8,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Initialize services
-  await NotificationService.initialize();
   await AuthService().initialize();
   
   // Track app open

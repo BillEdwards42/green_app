@@ -14,7 +14,7 @@ class ApiConfig {
   
   // Toggle between environments
   static const bool isProduction = false;
-  static const bool useEmulator = true; // Set to false for physical device
+  static const bool useEmulator = false; // Set to false for physical device
   static const bool useAlternativeEmulator = true; // Set to true if 10.0.2.2 doesn't work
   
   // Current environment URL
@@ -45,6 +45,7 @@ class ApiConfig {
   static const String carbonCurrent = '/carbon/current';
   static const String carbonForecast = '/carbon/forecast';
   static const String carbonHistorical = '/carbon/historical';
+  static const String carbonLatest = '/carbon/latest';  // New endpoint for combined data
   
   static const String choresLog = '/chores/log';
   static const String choresEstimate = '/chores/estimate';
