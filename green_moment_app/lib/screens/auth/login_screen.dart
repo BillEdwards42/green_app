@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../constants/app_colors.dart';
 import '../../services/auth_service.dart';
 import '../../services/user_progress_service.dart';
@@ -22,36 +23,95 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
 
-    // Simulate Google Sign-In token (in real app, use google_sign_in package)
-    final fakeGoogleToken = 'google_token_${DateTime.now().millisecondsSinceEpoch}';
-    
-    final authService = AuthService();
-    final success = await authService.signInWithGoogle(
-      fakeGoogleToken,
-      username: _usernameController.text.trim().isEmpty 
-        ? null 
-        : _usernameController.text.trim(),
-    );
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (success) {
-      // Initialize progress for new user (this handles bronze task initialization)
-      final progressService = UserProgressService();
-      await progressService.initializeNewUserProgress();
+    try {
+      print('🔵 DEBUG: Starting Google Sign-In process...');
       
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
-        );
+      // Initialize Google Sign-In
+      print('🔵 DEBUG: Creating GoogleSignIn with scopes: [email]');
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email'],
+        // For Android, we need to specify the Web Client ID for server auth
+        clientId: '599763967070-1jqsh9uao7n6imo0sladsv9bm4q19dpu.apps.googleusercontent.com',
+      );
+      
+      print('🔵 DEBUG: GoogleSignIn initialized');
+      
+      // Sign out first to ensure account picker shows
+      await googleSignIn.signOut();
+      print('🔵 DEBUG: Signed out of previous session');
+      
+      // Trigger the Google Sign-In flow
+      print('🔵 DEBUG: Calling googleSignIn.signIn()...');
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      print('🔵 DEBUG: googleSignIn.signIn() returned: ${googleUser?.email ?? "null"}');
+      
+      if (googleUser == null) {
+        // User cancelled the sign-in
+        setState(() {
+          _isLoading = false;
+        });
+        return;
       }
-    } else {
+      
+      // Get auth details
+      print('🔵 DEBUG: Getting authentication details...');
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      print('🔵 DEBUG: Got authentication object');
+      
+      // Use the ID token for backend authentication
+      final String? idToken = googleAuth.idToken;
+      print('🔵 DEBUG: ID Token: ${idToken != null ? "Retrieved (${idToken.substring(0, 20)}...)" : "NULL"}');
+      
+      if (idToken == null) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = '無法取得 Google 認證資訊';
+        });
+        return;
+      }
+      
+      print('🔵 DEBUG: Preparing to call backend...');
+      print('🔵 DEBUG: Username: "${_usernameController.text.trim()}"');
+      
+      final authService = AuthService();
+      print('🔵 DEBUG: Calling authService.signInWithGoogle()...');
+      final success = await authService.signInWithGoogle(
+        idToken,
+        username: _usernameController.text.trim().isEmpty 
+          ? null 
+          : _usernameController.text.trim(),
+      );
+      print('🔵 DEBUG: Backend response: success=$success');
+
       setState(() {
-        // Use the specific error message from the backend
-        _errorMessage = authService.lastErrorMessage ?? '登入失敗，請重新嘗試。';
+        _isLoading = false;
+      });
+
+      if (success) {
+        // Initialize progress for new user (this handles bronze task initialization)
+        final progressService = UserProgressService();
+        await progressService.initializeNewUserProgress();
+        
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        }
+      } else {
+        setState(() {
+          // Use the specific error message from the backend
+          _errorMessage = authService.lastErrorMessage ?? '登入失敗，請重新嘗試。';
+        });
+      }
+    } catch (e, stackTrace) {
+      print('🔴 Google Sign-In Error: $e');
+      print('🔴 Error Type: ${e.runtimeType}');
+      print('🔴 Stack Trace: $stackTrace');
+      
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Google 登入失敗: ${e.toString()}';
       });
     }
   }
@@ -60,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [

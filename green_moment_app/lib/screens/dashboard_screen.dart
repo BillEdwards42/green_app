@@ -4,7 +4,12 @@ import '../constants/app_colors.dart';
 import '../widgets/background_pattern.dart';
 import '../models/user_progress.dart';
 import '../services/user_progress_service.dart';
+import '../services/auth_service.dart';
 import '../widgets/league_upgrade_success_popup.dart';
+import '../widgets/animated_menu_toggle.dart';
+import '../widgets/account_settings_modal.dart';
+import '../services/notification_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -74,8 +79,36 @@ class DashboardScreenState extends State<DashboardScreen>
   Future<void> _checkForLeagueUpgrade() async {
     final shouldShow = await _progressService.shouldShowLeagueUpgrade();
     if (shouldShow && mounted) {
-      // TODO: Show league upgrade animation
+      // Get the league info from progress
+      final progress = await _progressService.getUserProgress();
+      if (progress != null && progress.shouldShowLeagueUpgrade) {
+        // Mark as shown
+        await _progressService.markLeagueUpgradeShown();
+        
+        // Show the upgrade popup
+        if (mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => LeagueUpgradeSuccessPopup(
+              oldLeague: _getLeagueBefore(progress.currentLeague),
+              newLeague: progress.currentLeague,
+              onClose: () {
+                Navigator.of(context).pop();
+                // Reload progress to update UI
+                _loadUserProgress();
+              },
+            ),
+          );
+        }
+      }
     }
+  }
+  
+  String _getLeagueBefore(String currentLeague) {
+    const leagues = ['bronze', 'silver', 'gold', 'emerald', 'diamond'];
+    final index = leagues.indexOf(currentLeague);
+    return index > 0 ? leagues[index - 1] : currentLeague;
   }
 
   // Public method to refresh data from external sources
@@ -108,7 +141,9 @@ class DashboardScreenState extends State<DashboardScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(height: 40),
+                              const SizedBox(height: 50),
+                              _buildUserGreeting(),
+                              const SizedBox(height: 24),
                               _buildMonthlySavingsCard(),
                           const SizedBox(height: 32),
                           _buildLeagueSection(),
@@ -116,35 +151,91 @@ class DashboardScreenState extends State<DashboardScreen>
                           _buildTasksSection(),
                           const SizedBox(height: 20),
                           _buildFooterNote(),
+                          const SizedBox(height: 20),
+                          // DEBUG: FCM Token Display Button
+                          _buildDebugTokenButton(),
                           const SizedBox(height: 32),
                             ],
                           ),
                         ),
                       ),
-                      // Help button
+                      // Menu toggle
                       Positioned(
                         top: 10,
-                        right: 10,
-                        child: IconButton(
-                          onPressed: _showHelpDialog,
-                          icon: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: AppColors.textPrimary.withValues(alpha: 0.08),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.help_outline,
-                              color: AppColors.textPrimary,
-                              size: 24,
-                            ),
-                          ),
+                        right: 20,
+                        child: AnimatedMenuToggle(
+                          onSettingsTap: _showAccountSettings,
+                          onRankingTap: _showHelpDialog,
                         ),
                       ),
                     ],
                   ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildUserGreeting() {
+    final authService = AuthService();
+    final username = authService.username ?? '用戶';
+    
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Active indicator with pulse animation
+            AnimatedBuilder(
+              animation: _pulseAnimation,
+              builder: (context, child) {
+                return Container(
+                  width: 8,
+                  height: 8,
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.green,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.green.withValues(alpha: 0.6),
+                        blurRadius: 16 * _pulseAnimation.value,
+                        spreadRadius: 4 * _pulseAnimation.value,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            // Greeting text
+            RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 26,
+                  height: 1.2,
+                ),
+                children: [
+                  TextSpan(
+                    text: '你好，',
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  TextSpan(
+                    text: username,
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -484,6 +575,13 @@ class DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  void _showAccountSettings() {
+    showDialog(
+      context: context,
+      builder: (context) => const AccountSettingsModal(),
+    );
+  }
+
   void _showHelpDialog() {
     showDialog(
       context: context,
@@ -635,6 +733,101 @@ class DashboardScreenState extends State<DashboardScreen>
           ),
         ),
       ],
+    );
+  }
+
+  // DEBUG: Method to show FCM token
+  Widget _buildDebugTokenButton() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.orange.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.orange.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '🔧 DEBUG: FCM Token',
+            style: TextStyle(
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: _showFCMToken,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Show FCM Token'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showFCMToken() async {
+    // Get FCM token from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('device_token') ?? 'No token found';
+    
+    // Show dialog with token
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.bgPrimary,
+        title: const Text(
+          'FCM Token',
+          style: TextStyle(color: AppColors.textPrimary),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Copy this token for testing:',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: SelectableText(
+                token,
+                style: const TextStyle(
+                  color: Colors.green,
+                  fontFamily: 'monospace',
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Token length: ${token.length}',
+              style: TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
     );
   }
 }

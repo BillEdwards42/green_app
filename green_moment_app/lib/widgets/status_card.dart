@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../models/carbon_intensity_model.dart';
 import '../models/recommendation_model.dart';
+import 'notification_settings.dart';
 
 class StatusCard extends StatefulWidget {
   final CarbonIntensityModel? intensity;
@@ -121,113 +122,73 @@ class _StatusCardState extends State<StatusCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Recommendation section with improved visual hierarchy
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.accent.withValues(alpha: 0.08),
-                        AppColors.accent.withValues(alpha: 0.03),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppColors.accent.withValues(alpha: 0.2),
-                      width: 1,
+                // Simple text layout for 最佳用電時段
+                Padding(
+                  padding: const EdgeInsets.only(left: 4, bottom: 8),
+                  child: Text(
+                    '最佳用電時段',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time,
-                            size: 16,
-                            color: AppColors.accent,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '最佳用電時段',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.accent,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      
-                      if (widget.isLoading)
-                        // Loading state
-                        Row(
+                ),
+                
+                // Time display
+                Padding(
+                  padding: const EdgeInsets.only(left: 4, bottom: 8),
+                  child: widget.isLoading
+                      ? Row(
                           children: [
                             SizedBox(
-                              width: 16,
-                              height: 16,
+                              width: 12,
+                              height: 12,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                             Text(
                               '更新中...',
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                                 color: AppColors.textSecondary,
                               ),
                             ),
                           ],
                         )
-                      else if (widget.recommendation != null)
-                        // Normal recommendation display with gradient
-                        ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [AppColors.accent, AppColors.accentLight],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ).createShader(bounds),
-                          child: Text(
-                            '${widget.recommendation!.startTime} - ${widget.recommendation!.endTime}',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                        )
-                      else
-                        // Fallback
-                        Text(
-                          '-- : -- - -- : --',
+                      : Text(
+                          widget.recommendation != null
+                              ? '${widget.recommendation!.startTime} - ${widget.recommendation!.endTime}'
+                              : '-- : -- - -- : --',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textMuted.withValues(alpha: 0.5),
+                            color: widget.recommendation != null 
+                                ? AppColors.accent
+                                : AppColors.textMuted.withValues(alpha: 0.5),
                             letterSpacing: -0.5,
                           ),
                         ),
-                    ],
-                  ),
                 ),
                 
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
+                
+                // Notification settings
+                const NotificationSettings(),
+                
+                const SizedBox(height: 10),
                 
                 // Forecast button
                 GestureDetector(
                   onTap: widget.isLoading ? null : widget.onForecastTap,
                   child: Container(
+                    height: 38,
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
                       color: widget.isLoading 
                           ? AppColors.textMuted.withValues(alpha: 0.1)
@@ -239,9 +200,11 @@ class _StatusCardState extends State<StatusCard> {
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                         Text(
                           '查看24小時詳細預測',
                           style: TextStyle(
@@ -261,6 +224,7 @@ class _StatusCardState extends State<StatusCard> {
                               : AppColors.textSecondary,
                         ),
                       ],
+                      ),
                     ),
                   ),
                 ),

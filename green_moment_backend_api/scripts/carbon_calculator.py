@@ -89,9 +89,9 @@ class CarbonCalculator:
         # Calculate emissions for each fuel type
         fuel_emissions = {}
         for fuel, generation_mw in fuel_totals_mw.items():
-            # Convert MW to kWh for 10-minute period: MW * (10/60) * 1000
-            generation_kwh = generation_mw * (10/60) * 1000
-            emissions_kg = generation_kwh * self.emission_factors[fuel]
+            # Convert MW to kW: MW * 1000
+            generation_kw = generation_mw * 1000
+            emissions_kg = generation_kw * self.emission_factors[fuel]
             fuel_emissions[fuel] = emissions_kg
             total_emissions_kg += emissions_kg
             
@@ -99,20 +99,20 @@ class CarbonCalculator:
             if generation_mw > 0:
                 calc_log['fuel_details'][fuel] = {
                     'generation_mw': round(generation_mw, 2),
-                    'conversion': f"{generation_mw:.2f} MW × (10/60) hours × 1000 = {generation_kwh:.2f} kWh",
-                    'generation_kwh': round(generation_kwh, 2),
+                    'conversion': f"{generation_mw:.2f} MW × 1000 = {generation_kw:.2f} kW",
+                    'generation_kw': round(generation_kw, 2),
                     'emission_factor': self.emission_factors[fuel],
-                    'emissions_calculation': f"{generation_kwh:.2f} kWh × {self.emission_factors[fuel]} = {emissions_kg:.2f} kg CO2e",
+                    'emissions_calculation': f"{generation_kw:.2f} kW × {self.emission_factors[fuel]} = {emissions_kg:.2f} kg CO2e",
                     'emissions_kg': round(emissions_kg, 2)
                 }
         
         # Add Storage to log as excluded
         if storage_mw > 0:
-            storage_kwh = storage_mw * (10/60) * 1000
+            storage_kw = storage_mw * 1000
             calc_log['fuel_details']['Storage'] = {
                 'generation_mw': round(storage_mw, 2),
-                'conversion': f"{storage_mw:.2f} MW × (10/60) hours × 1000 = {storage_kwh:.2f} kWh",
-                'generation_kwh': round(storage_kwh, 2),
+                'conversion': f"{storage_mw:.2f} MW × 1000 = {storage_kw:.2f} kW",
+                'generation_kw': round(storage_kw, 2),
                 'emission_factor': 0,
                 'emissions_calculation': "EXCLUDED FROM CALCULATIONS",
                 'emissions_kg': 0,
@@ -121,17 +121,17 @@ class CarbonCalculator:
         
         # Calculate carbon intensity
         if total_generation_mw > 0:
-            total_generation_kwh = total_generation_mw * (10/60) * 1000
-            carbon_intensity = total_emissions_kg / total_generation_kwh
+            total_generation_kw = total_generation_mw * 1000
+            carbon_intensity = total_emissions_kg / total_generation_kw
             
             # Add summary to log
             calc_log['summary'] = {
                 'total_generation_mw': round(total_generation_mw, 2),
-                'total_generation_kwh': round(total_generation_kwh, 2),
+                'total_generation_kw': round(total_generation_kw, 2),
                 'total_emissions_kg': round(total_emissions_kg, 2),
-                'carbon_intensity_kg_per_kwh': round(carbon_intensity, 6),
-                'carbon_intensity_g_per_kwh': round(carbon_intensity * 1000, 1),
-                'calculation': f"{total_emissions_kg:.2f} kg CO2e ÷ {total_generation_kwh:.2f} kWh = {carbon_intensity:.6f} kg/kWh = {carbon_intensity * 1000:.1f} g/kWh",
+                'carbon_intensity_kg_per_kw': round(carbon_intensity, 6),
+                'carbon_intensity_g_per_kw': round(carbon_intensity * 1000, 1),
+                'calculation': f"{total_emissions_kg:.2f} kg CO2e ÷ {total_generation_kw:.2f} kW = {carbon_intensity:.6f} kg/kW = {carbon_intensity * 1000:.1f} g/kW",
                 'storage_mw': round(storage_mw, 2),
                 'note': 'Storage excluded from total generation for carbon intensity calculation'
             }
@@ -147,9 +147,9 @@ class CarbonCalculator:
         
         details = {
             'total_generation_mw': total_generation_mw,
-            'total_generation_kwh': total_generation_mw * (10/60) * 1000,
+            'total_generation_kw': total_generation_mw * 1000,
             'total_emissions_kg': total_emissions_kg,
-            'carbon_intensity_kgco2_kwh': carbon_intensity,
+            'carbon_intensity_kgco2_kw': carbon_intensity,
             'fuel_generation_mw': fuel_totals_mw,
             'fuel_emissions_kg': fuel_emissions,
             'storage_mw': storage_mw
@@ -193,15 +193,15 @@ class CarbonCalculator:
                     if generation_mw > 0:  # Ignore negative predictions
                         total_generation_mw += generation_mw
                         
-                        # Convert to kWh and calculate emissions
-                        generation_kwh = generation_mw * (10/60) * 1000
-                        emissions_kg = generation_kwh * self.emission_factors[fuel]
+                        # Convert to kW and calculate emissions
+                        generation_kw = generation_mw * 1000
+                        emissions_kg = generation_kw * self.emission_factors[fuel]
                         total_emissions_kg += emissions_kg
             
             # Calculate intensity for this timestep
             if total_generation_mw > 0:
-                total_generation_kwh = total_generation_mw * (10/60) * 1000
-                carbon_intensity = total_emissions_kg / total_generation_kwh
+                total_generation_kw = total_generation_mw * 1000
+                carbon_intensity = total_emissions_kg / total_generation_kw
             else:
                 carbon_intensity = 0
                 

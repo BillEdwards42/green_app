@@ -2,14 +2,14 @@ class ApplianceModel {
   final String id;
   final String name;
   final String icon;
-  final double kwhPerHour;
+  final double kw;
   final int sortOrder;
 
   const ApplianceModel({
     required this.id,
     required this.name,
     required this.icon,
-    required this.kwhPerHour,
+    required this.kw,
     required this.sortOrder,
   });
 
@@ -18,7 +18,7 @@ class ApplianceModel {
       id: json['id'] as String,
       name: json['name'] as String,
       icon: json['icon'] as String,
-      kwhPerHour: json['kwhPerHour'].toDouble(),
+      kw: json['kw'].toDouble(),
       sortOrder: json['sortOrder'] as int,
     );
   }
@@ -28,7 +28,7 @@ class ApplianceModel {
       'id': id,
       'name': name,
       'icon': icon,
-      'kwhPerHour': kwhPerHour,
+      'kw': kw,
       'sortOrder': sortOrder,
     };
   }

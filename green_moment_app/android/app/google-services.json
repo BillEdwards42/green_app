@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "599763967070",
+    "project_id": "wired-benefit-467706-g8",
+    "storage_bucket": "wired-benefit-467706-g8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599763967070:android:df8865fd8d8fc31c10e8cf",
+        "android_client_info": {
+          "package_name": "tw.greenmoment.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599763967070-82qu8cs0eockrk1qjnb9d5l9ulr6hv4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tw.greenmoment.app",
+            "certificate_hash": "5b2e3c320ef1c66804b4c79ecce8ab7bcc432f6c"
+          }
+        },
+        {
+          "client_id": "599763967070-1jqsh9uao7n6imo0sladsv9bm4q19dpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2fXv_zriKYonhod5UXvst6bVDIJNH97M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599763967070-1jqsh9uao7n6imo0sladsv9bm4q19dpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

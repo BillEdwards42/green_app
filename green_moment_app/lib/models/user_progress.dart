@@ -44,12 +44,14 @@ class TaskProgress {
   final String description;
   final bool completed;
   final TaskType type;
+  final int? targetValue;
 
   TaskProgress({
     required this.id,
     required this.description,
     required this.completed,
     required this.type,
+    this.targetValue,
   });
 
   factory TaskProgress.fromJson(Map<String, dynamic> json) {
@@ -61,7 +63,67 @@ class TaskProgress {
         (e) => e.toString() == 'TaskType.${json['type']}',
         orElse: () => TaskType.other,
       ),
+      targetValue: json['target_value'],
     );
+  }
+
+  // Add factory method for API responses
+  factory TaskProgress.fromApi(Map<String, dynamic> json) {
+    // Temporary workaround: infer task type from task_id if task_type is missing
+    TaskType taskType = TaskType.other;
+    if (json['task_type'] != null) {
+      taskType = _mapTaskType(json['task_type']);
+    } else {
+      // Map based on task_id (bronze tasks are 4, 5, 6)
+      switch (json['task_id']) {
+        case 4:
+          taskType = TaskType.firstAppOpen;
+          break;
+        case 5:
+          taskType = TaskType.firstLogin;
+          break;
+        case 6:
+          taskType = TaskType.firstApplianceLog;
+          break;
+        default:
+          taskType = TaskType.other;
+      }
+    }
+    
+    return TaskProgress(
+      id: json['task_id'].toString(),
+      description: json['name'],  // API returns 'name' not 'description'
+      completed: json['completed'] ?? false,
+      type: taskType,
+      targetValue: json['target_value'],
+    );
+  }
+  
+  static TaskType _mapTaskType(String? type) {
+    if (type == null) return TaskType.other;
+    
+    switch (type) {
+      case 'firstAppOpen':
+        return TaskType.firstAppOpen;
+      case 'firstLogin':
+        return TaskType.firstLogin;
+      case 'firstApplianceLog':
+        return TaskType.firstApplianceLog;
+      case 'carbonReduction':
+        return TaskType.carbonReduction;
+      case 'weeklyLogs':
+        return TaskType.weeklyLogs;
+      case 'weeklyAppOpens':
+        return TaskType.weeklyAppOpens;
+      case 'applianceVariety':
+        return TaskType.applianceVariety;
+      case 'dailyAppOpen':
+        return TaskType.dailyAppOpen;
+      case 'dailyLog':
+        return TaskType.dailyLog;
+      default:
+        return TaskType.other;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +132,7 @@ class TaskProgress {
       'description': description,
       'completed': completed,
       'type': type.toString().split('.').last,
+      'target_value': targetValue,
     };
   }
 }

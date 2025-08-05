@@ -56,6 +56,9 @@ class Settings(BaseSettings):
     # Timezone
     TIMEZONE: str = "Asia/Taipei"
     
+    # Firebase Configuration
+    FIREBASE_CREDENTIALS_PATH: str = "../firebase-admin-sdk.json"
+    
     # Appliance power consumption (in Watts)
     APPLIANCE_POWER: dict = {
         "washing_machine": 500,

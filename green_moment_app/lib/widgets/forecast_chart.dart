@@ -40,10 +40,7 @@ class _ForecastChartState extends State<ForecastChart>
     
     _animationController.forward();
     
-    // Auto-scroll to current hour after animation
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToCurrentHour();
-    });
+    // Removed auto-scroll to keep chart at the left edge
   }
 
   @override
@@ -53,23 +50,6 @@ class _ForecastChartState extends State<ForecastChart>
     super.dispose();
   }
 
-  void _scrollToCurrentHour() {
-    if (widget.forecastData.isEmpty) return;
-    
-    final currentHour = DateTime.now().hour;
-    final barWidth = 17.0; // 14px width + 3px gap
-    final scrollPosition = (currentHour * 6 * barWidth) - 100; // 6 bars per hour
-    
-    Future.delayed(const Duration(milliseconds: 800), () {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          scrollPosition.clamp(0.0, _scrollController.position.maxScrollExtent),
-          duration: const Duration(milliseconds: 600),
-          curve: Curves.easeInOut,
-        );
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +62,10 @@ class _ForecastChartState extends State<ForecastChart>
       );
     }
 
-    final maxValue = widget.forecastData
-        .map((e) => e.gco2KWh)
-        .reduce(math.max)
-        .ceilToDouble();
+    // Set fixed range for y-axis
+    const double minValue = 450.0;
+    const double maxValue = 600.0;
+    const double range = maxValue - minValue;
     
     return Column(
       children: [
@@ -144,15 +124,14 @@ class _ForecastChartState extends State<ForecastChart>
                     border: Border(right: BorderSide(color: AppColors.border)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 40, bottom: 40),
+                    padding: const EdgeInsets.only(top: 40, bottom: 42.8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildYAxisLabel(maxValue.round().toString()),
-                        _buildYAxisLabel((maxValue * 0.75).round().toString()),
-                        _buildYAxisLabel((maxValue * 0.5).round().toString()),
-                        _buildYAxisLabel((maxValue * 0.25).round().toString()),
-                        _buildYAxisLabel('0'),
+                        _buildYAxisLabel('600'),
+                        _buildYAxisLabel('550'),
+                        _buildYAxisLabel('500'),
+                        _buildYAxisLabel('450'),
                       ],
                     ),
                   ),
@@ -166,26 +145,31 @@ class _ForecastChartState extends State<ForecastChart>
                     child: AnimatedBuilder(
                       animation: _animation,
                       builder: (context, child) {
-                        return Container(
-                          height: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 8),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: widget.forecastData.asMap().entries.map((entry) {
-                              final index = entry.key;
-                              final data = entry.value;
-                              final isCurrentHour = _isCurrentHour(data.time);
-                              
-                              return AnimatedContainer(
-                                duration: Duration(milliseconds: 50 + (index * 15)),
-                                margin: const EdgeInsets.symmetric(horizontal: 1.5),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // Bar
-                                    Container(
-                                      width: 14,
-                                      height: (data.gco2KWh / maxValue) * 200 * _animation.value,
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            // Calculate available height for bars (subtract padding)
+                            final chartHeight = constraints.maxHeight - 80; // 40 top + 40 bottom padding
+                            
+                            return Container(
+                              height: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: widget.forecastData.asMap().entries.map((entry) {
+                                  final index = entry.key;
+                                  final data = entry.value;
+                                  final isCurrentHour = _isCurrentHour(data.time);
+                                  
+                                  return AnimatedContainer(
+                                    duration: Duration(milliseconds: 50 + (index * 15)),
+                                    margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // Bar
+                                        Container(
+                                          width: 14,
+                                          height: math.max(0, ((data.gco2KWh - minValue) / range) * chartHeight * _animation.value),
                                       decoration: BoxDecoration(
                                         gradient: _getBarGradient(data.level),
                                         borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
@@ -230,7 +214,9 @@ class _ForecastChartState extends State<ForecastChart>
                                 ),
                               );
                             }).toList(),
-                          ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -307,9 +293,9 @@ class _ForecastChartState extends State<ForecastChart>
   }
 
   bool _isCurrentHour(String time) {
-    final currentHour = DateTime.now().hour;
-    final timeHour = int.parse(time.substring(0, 2));
-    return timeHour == currentHour;
+    // Since this is forecast data, we should not highlight any bars as "current"
+    // The forecast shows future predictions, not the current hour
+    return false;
   }
 }
 

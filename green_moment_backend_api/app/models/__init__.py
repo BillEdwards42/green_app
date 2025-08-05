@@ -4,6 +4,7 @@ from app.models.carbon_intensity import CarbonIntensity
 from app.models.league import League
 from app.models.task import Task, UserTask
 from app.models.monthly_summary import MonthlySummary
+from app.models.notification import DeviceToken, NotificationSettings, NotificationLog
 
 __all__ = [
     "User",
@@ -12,5 +13,8 @@ __all__ = [
     "League",
     "Task",
     "UserTask",
-    "MonthlySummary"
+    "MonthlySummary",
+    "DeviceToken",
+    "NotificationSettings",
+    "NotificationLog"
 ]

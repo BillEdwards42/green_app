@@ -8,7 +8,7 @@ class MonthlySummary(Base):
     __tablename__ = "monthly_summaries"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     month = Column(Integer, nullable=False)  # Month (1-12)
     year = Column(Integer, nullable=False)  # Year
     

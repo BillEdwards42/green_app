@@ -1,0 +1,14 @@
+# Secret files and credentials
+firebase-admin-sdk.json
+client_secret_*.json
+google-services.json
+
+# Environment files
+.env
+.env.*
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.jks

@@ -26,6 +26,7 @@ class AppColors {
   static const Color yellowGlow = Color(0x66F59E0B);
   static const Color red = Color(0xFFEF4444);
   static const Color redGlow = Color(0x66EF4444);
+  static const Color error = Color(0xFFEF4444);  // Alias for red, used in forms
   
   // Accent colors
   static const Color accent = Color(0xFF6366F1);

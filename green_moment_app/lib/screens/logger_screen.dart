@@ -4,6 +4,7 @@ import '../constants/appliance_data.dart';
 import '../models/appliance_model.dart';
 import '../models/forecast_data_model.dart';
 import '../services/api_service.dart';
+import '../services/auth_service.dart';
 import '../services/user_progress_service.dart';
 import '../widgets/background_pattern.dart';
 
@@ -16,11 +17,14 @@ class LoggerScreen extends StatefulWidget {
 
 class _LoggerScreenState extends State<LoggerScreen> {
   final UserProgressService _progressService = UserProgressService();
+  final AuthService _authService = AuthService();
   ApplianceModel? _selectedAppliance;
   Duration _selectedDuration = const Duration(hours: 1);
   List<ForecastDataModel>? _forecastData;
   DateTime? _lastFetchTime;
   double? _predictedSavings;
+  double? _averageCarbonIntensity;
+  double? _peakCarbonIntensity;
   bool _isDropdownOpen = false;
   int _consecutiveLogCount = 0;
   
@@ -123,6 +127,8 @@ class _LoggerScreenState extends State<LoggerScreen> {
     if (_selectedDuration.inMinutes == 0) {
       setState(() {
         _predictedSavings = null;
+        _averageCarbonIntensity = null;
+        _peakCarbonIntensity = null;
       });
       return;
     }
@@ -173,12 +179,14 @@ class _LoggerScreenState extends State<LoggerScreen> {
     
     // Calculate emissions
     final durationHours = _selectedDuration.inMinutes / 60.0;
-    final predictedEmission = avgIntensity * _selectedAppliance!.kwhPerHour * durationHours;
-    final worstEmission = worstIntensity * _selectedAppliance!.kwhPerHour * durationHours;
+    final predictedEmission = avgIntensity * _selectedAppliance!.kw * durationHours;
+    final worstEmission = worstIntensity * _selectedAppliance!.kw * durationHours;
     final savings = worstEmission - predictedEmission;
     
     setState(() {
       _predictedSavings = savings > 0 ? savings : 0;
+      _averageCarbonIntensity = avgIntensity;
+      _peakCarbonIntensity = worstIntensity;
     });
   }
 
@@ -231,34 +239,68 @@ class _LoggerScreenState extends State<LoggerScreen> {
       return;
     }
     
-    // Track usage in progress service
-    await _progressService.trackUsageLog(
-      _selectedAppliance!.id,
-      _predictedSavings!,
-    );
-    
-    // Increment consecutive log count
-    _consecutiveLogCount++;
-    
-    // Check if warning should be shown
-    if (_consecutiveLogCount >= 5) {
-      _showWarningDialog();
+    try {
+      // Get auth token
+      await _authService.initialize(); // Ensure auth service is initialized
+      final token = _authService.token;
+      print('Auth token in logger: $token');
+      if (token == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('請先登入'),
+            backgroundColor: AppColors.red,
+          ),
+        );
+        return;
+      }
+      
+      // Call backend API to log chore
+      await ApiService.logChore(
+        applianceType: _selectedAppliance!.id,
+        startTime: DateTime.now(),
+        durationMinutes: _selectedDuration.inMinutes,
+        token: token,
+      );
+      
+      // Track usage in progress service (for local UI updates)
+      await _progressService.trackUsageLog(
+        _selectedAppliance!.id,
+        _predictedSavings!,
+      );
+      
+      // Increment consecutive log count
+      _consecutiveLogCount++;
+      
+      // Check if warning should be shown
+      if (_consecutiveLogCount >= 5) {
+        _showWarningDialog();
+      }
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('已開始記錄 ${_selectedAppliance!.name}'),
+          backgroundColor: AppColors.green,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      
+      // Reset form
+      setState(() {
+        _selectedAppliance = null;
+        _selectedDuration = const Duration(hours: 1);
+        _predictedSavings = null;
+        _averageCarbonIntensity = null;
+        _peakCarbonIntensity = null;
+      });
+    } catch (e) {
+      print('Failed to log chore: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('記錄失敗，請稍後再試'),
+          backgroundColor: AppColors.red,
+        ),
+      );
     }
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('已開始記錄 ${_selectedAppliance!.name}'),
-        backgroundColor: AppColors.green,
-        duration: const Duration(seconds: 2),
-      ),
-    );
-    
-    // Reset form
-    setState(() {
-      _selectedAppliance = null;
-      _selectedDuration = const Duration(hours: 1);
-      _predictedSavings = null;
-    });
   }
   
   void _showWarningDialog() {
@@ -468,7 +510,7 @@ class _LoggerScreenState extends State<LoggerScreen> {
                   ),
                   if (_selectedAppliance != null)
                     Text(
-                      '${_selectedAppliance!.kwhPerHour} kWh',
+                      '${_selectedAppliance!.kw} kW',
                       style: TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 14,
@@ -589,7 +631,7 @@ class _LoggerScreenState extends State<LoggerScreen> {
                                     ),
                                   ),
                                   Text(
-                                    '${appliance.kwhPerHour} kWh',
+                                    '${appliance.kw} kW',
                                     style: TextStyle(
                                       color: AppColors.textSecondary,
                                       fontSize: 14,

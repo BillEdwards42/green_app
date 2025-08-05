@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'screens/main_screen.dart';
 import 'screens/auth/welcome_screen.dart';
 import 'services/user_progress_service.dart';
 import 'services/auth_service.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
+  // Initialize Firebase first
+  await Firebase.initializeApp();
+  
   // Initialize services
   await AuthService().initialize();
+  
+  // Initialize notification service
+  await NotificationService().initialize();
   
   // Track app open
   final progressService = UserProgressService();

@@ -4,6 +4,7 @@ class ApiConfig {
   static const String androidEmulatorUrl = 'http://10.0.2.2:8000/api/v1';
   
   // For physical device on same network (your computer's actual IP)
+  // Update this with your computer's current IP address
   static const String localNetworkUrl = 'http://192.168.0.199:8000/api/v1';
   
   // Alternative emulator URLs to try

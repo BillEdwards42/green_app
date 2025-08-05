@@ -31,7 +31,7 @@ async def init_db():
     """Initialize database - create tables if they don't exist"""
     async with engine.begin() as conn:
         # Import all models here to ensure they are registered
-        from app.models import user, chore, carbon_intensity, league, task, monthly_summary
+        from app.models import user, chore, carbon_intensity, league, task, monthly_summary, notification
         
         # Create all tables
         await conn.run_sync(Base.metadata.create_all)

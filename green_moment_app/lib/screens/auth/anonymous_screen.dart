@@ -61,6 +61,7 @@ class _AnonymousScreenState extends State<AnonymousScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [

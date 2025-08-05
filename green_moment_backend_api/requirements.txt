@@ -36,6 +36,9 @@ numpy==1.26.2
 # Content filtering (profanity check)
 better-profanity==0.7.0
 
+# Firebase Admin SDK for push notifications
+firebase-admin==6.5.0
+
 # CORS (built into FastAPI, remove this dependency)
 # fastapi-cors==0.0.6
 

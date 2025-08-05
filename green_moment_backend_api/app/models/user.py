@@ -10,15 +10,19 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=True)  # Null for anonymous users
-    google_id = Column(String, unique=True, index=True, nullable=True)  # Null for anonymous users
+    google_id = Column(String, index=True, nullable=True)  # Not unique anymore, allows re-registration
     is_anonymous = Column(Boolean, default=False, nullable=False)
     current_league = Column(String, default="bronze", nullable=False)  # bronze, silver, gold, platinum, diamond
     total_carbon_saved = Column(Float, default=0.0, nullable=False)  # Total kg CO2 saved
     current_month_tasks_completed = Column(Integer, default=0, nullable=False)  # Tasks completed this month
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    deleted_at = Column(DateTime(timezone=True), nullable=True)  # Soft delete timestamp
 
     # Relationships
     chores = relationship("Chore", back_populates="user", cascade="all, delete-orphan")
     user_tasks = relationship("UserTask", back_populates="user", cascade="all, delete-orphan")
     monthly_summaries = relationship("MonthlySummary", back_populates="user", cascade="all, delete-orphan")
+    device_tokens = relationship("DeviceToken", back_populates="user", cascade="all, delete-orphan")
+    notification_settings = relationship("NotificationSettings", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    notification_logs = relationship("NotificationLog", back_populates="user", cascade="all, delete-orphan")

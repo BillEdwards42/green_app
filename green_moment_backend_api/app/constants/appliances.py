@@ -1,0 +1,21 @@
+# Appliance power consumption data (in kW)
+APPLIANCE_POWER = {
+    "washing_machine": 1.2,
+    "dryer": 2.0,
+    "dishwasher": 1.8,
+    "microwave": 1.0,
+    "oven": 2.5,
+    "cooktop": 2.0,
+    "water_heater": 4.0,
+    "air_conditioner": 2.5,
+    "dehumidifier": 0.5,
+    "electric_heater": 1.5,
+    "vacuum": 0.8,
+    "iron": 1.0,
+    "hair_dryer": 1.2,
+    "tv": 0.2,
+    "desktop_computer": 0.3,
+    "fan": 0.075,
+    "ev_fast_charge": 50.0,
+    "ev_slow_charge": 7.0,
+}

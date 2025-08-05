@@ -3,12 +3,16 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api_config.dart';
 import 'user_progress_service.dart';
+import 'notification_service.dart';
 
 class AuthService {
   static const String _tokenKey = 'auth_token';
   static const String _userIdKey = 'user_id';
   static const String _usernameKey = 'username';
   static const String _isAnonymousKey = 'is_anonymous';
+  static const String _emailKey = 'email';
+  static const String _createdAtKey = 'created_at';
+  static const String _currentLeagueKey = 'current_league';
 
   // Singleton pattern
   static final AuthService _instance = AuthService._internal();
@@ -19,6 +23,10 @@ class AuthService {
   int? _userId;
   String? _username;
   bool _isAnonymous = false;
+  String? _email;
+  String? _createdAt;
+  String? _currentLeague;
+  String? _lastErrorMessage;
 
   // Getters
   bool get isAuthenticated => _token != null;
@@ -26,27 +34,47 @@ class AuthService {
   int? get userId => _userId;
   String? get username => _username;
   bool get isAnonymous => _isAnonymous;
+  String? get email => _email;
+  String? get lastErrorMessage => _lastErrorMessage;
+  
+  Map<String, dynamic>? get currentUser => isAuthenticated ? {
+    'user_id': _userId,
+    'username': _username,
+    'email': _email,
+    'is_anonymous': _isAnonymous,
+    'created_at': _createdAt,
+    'current_league': _currentLeague,
+  } : null;
 
   /// Initialize auth service - call this at app startup
   Future<void> initialize() async {
+    print('🔄 AuthService.initialize() called');
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString(_tokenKey);
     _userId = prefs.getInt(_userIdKey);
     _username = prefs.getString(_usernameKey);
     _isAnonymous = prefs.getBool(_isAnonymousKey) ?? false;
+    _email = prefs.getString(_emailKey);
+    _createdAt = prefs.getString(_createdAtKey);
+    _currentLeague = prefs.getString(_currentLeagueKey);
+    
+    print('🔑 Loaded token from prefs: ${_token?.substring(0, 20)}...');
+    print('👤 User ID: $_userId, Username: $_username');
 
     // Verify token if exists
     if (_token != null) {
+      print('🔍 Verifying token...');
       final isValid = await _verifyToken();
+      print('✅ Token valid: $isValid');
       if (!isValid) {
-        await logout();
+        print('❌ Token invalid, logging out');
+        await signOut();
+      } else {
+        // Refresh user profile data
+        await getUserProfile();
       }
     }
   }
-
-  String? _lastErrorMessage; // Store the last error message
-  
-  String? get lastErrorMessage => _lastErrorMessage;
 
   /// Google Sign-In
   Future<bool> signInWithGoogle(String googleToken, {String? username}) async {
@@ -85,6 +113,15 @@ class AuthService {
           username: data['username'],
           isAnonymous: data['is_anonymous'],
         );
+        
+        // Load notification settings after successful sign-in
+        try {
+          final notificationService = NotificationService();
+          await notificationService.loadSettingsFromBackend();
+        } catch (e) {
+          print('Failed to load notification settings: $e');
+        }
+        
         return true;
       } else {
         try {
@@ -131,6 +168,15 @@ class AuthService {
           username: data['username'],
           isAnonymous: data['is_anonymous'],
         );
+        
+        // Load notification settings after successful sign-in
+        try {
+          final notificationService = NotificationService();
+          await notificationService.loadSettingsFromBackend();
+        } catch (e) {
+          print('Failed to load notification settings: $e');
+        }
+        
         return true;
       } else {
         try {
@@ -163,11 +209,13 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        print('🔍 Token verify response: $data');
+        // The response has 'valid' at the root level
         return data['valid'] == true;
       }
       return false;
     } catch (e) {
-      print('Token verification error: \$e');
+      print('Token verification error: $e');
       return false;
     }
   }
@@ -181,7 +229,7 @@ class AuthService {
         Uri.parse('${ApiConfig.baseUrl}/users/username'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer \$_token',
+          'Authorization': 'Bearer $_token',
         },
         body: jsonEncode({'username': newUsername}),
       );
@@ -208,36 +256,77 @@ class AuthService {
 
     try {
       final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}/users/profile'),
-        headers: {'Authorization': 'Bearer \$_token'},
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.userProfile}'),
+        headers: {'Authorization': 'Bearer $_token'},
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final data = jsonDecode(response.body);
+        
+        // Update stored user data
+        _email = data['email'];
+        _createdAt = data['created_at'];
+        _currentLeague = data['current_league'];
+        
+        // Save to preferences
+        final prefs = await SharedPreferences.getInstance();
+        if (_email != null) await prefs.setString(_emailKey, _email!);
+        if (_createdAt != null) await prefs.setString(_createdAtKey, _createdAt!);
+        if (_currentLeague != null) await prefs.setString(_currentLeagueKey, _currentLeague!);
+        
+        return data;
       }
       return null;
     } catch (e) {
-      print('Get profile error: \$e');
+      print('Get profile error: $e');
       return null;
     }
   }
 
-  /// Logout
-  Future<void> logout() async {
+  /// Sign out
+  Future<void> signOut() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
     await prefs.remove(_userIdKey);
     await prefs.remove(_usernameKey);
     await prefs.remove(_isAnonymousKey);
+    await prefs.remove(_emailKey);
+    await prefs.remove(_createdAtKey);
+    await prefs.remove(_currentLeagueKey);
 
     _token = null;
     _userId = null;
     _username = null;
     _isAnonymous = false;
+    _email = null;
+    _createdAt = null;
+    _currentLeague = null;
     
     // Clear all user progress data when logging out
     final progressService = UserProgressService();
     await progressService.clearAllProgress();
+  }
+  
+  /// Delete account
+  Future<bool> deleteAccount() async {
+    if (_token == null) return false;
+    
+    try {
+      final response = await http.delete(
+        Uri.parse('${ApiConfig.baseUrl}/users/me'),
+        headers: {'Authorization': 'Bearer $_token'},
+      );
+      
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        // Account deleted successfully, sign out locally
+        await signOut();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print('Delete account error: $e');
+      return false;
+    }
   }
 
   /// Save authentication data
@@ -257,11 +346,13 @@ class AuthService {
     _userId = userId;
     _username = username;
     _isAnonymous = isAnonymous;
+    
+    print('💾 Auth data saved - Token: ${token.substring(0, 20)}..., UserId: $userId');
   }
 
   /// Get authorization header for API calls
   Map<String, String> getAuthHeaders() {
     if (_token == null) return {};
-    return {'Authorization': 'Bearer \$_token'};
+    return {'Authorization': 'Bearer $_token'};
   }
 }

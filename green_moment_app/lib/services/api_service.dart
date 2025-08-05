@@ -5,6 +5,7 @@ import '../models/app_data_model.dart';
 import '../models/carbon_intensity_model.dart';
 import '../models/forecast_data_model.dart';
 import '../models/recommendation_model.dart';
+import 'auth_service.dart';
 
 class ApiService {
   static final Map<String, String> _headers = {
@@ -17,6 +18,61 @@ class ApiService {
       ..._headers,
       if (token != null) 'Authorization': 'Bearer $token',
     };
+  }
+
+  // Instance methods for the updated user_progress_service
+  final AuthService _authService = AuthService();
+
+  // Generic GET request
+  Future<ApiResponse> get(String endpoint) async {
+    try {
+      final token = _authService.token;
+      final response = await http.get(
+        Uri.parse('${ApiConfig.baseUrl}$endpoint'),
+        headers: _authHeaders(token),
+      ).timeout(ApiConfig.timeout);
+
+      if (response.statusCode == 200) {
+        return ApiResponse(
+          data: json.decode(response.body),
+          statusCode: response.statusCode,
+        );
+      } else if (response.statusCode == 401) {
+        print('API GET: Token expired or invalid. Status: 401');
+        throw Exception('GET $endpoint failed: 401 Unauthorized - Please login again');
+      } else {
+        print('API GET: Unexpected status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('GET $endpoint failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('API GET Error: $e');
+      throw e;
+    }
+  }
+
+  // Generic POST request
+  Future<ApiResponse> post(String endpoint, {Map<String, dynamic>? body}) async {
+    try {
+      final token = _authService.token;
+      final response = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}$endpoint'),
+        headers: _authHeaders(token),
+        body: body != null ? json.encode(body) : null,
+      ).timeout(ApiConfig.timeout);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ApiResponse(
+          data: response.body.isNotEmpty ? json.decode(response.body) : null,
+          statusCode: response.statusCode,
+        );
+      } else {
+        throw Exception('POST $endpoint failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('API POST Error: $e');
+      throw e;
+    }
   }
 
   /// Fetch current carbon data and forecast
@@ -120,9 +176,9 @@ class ApiService {
 
   /// Log a completed chore
   static Future<Map<String, dynamic>> logChore({
-    required String applianceId,
+    required String applianceType,
     required DateTime startTime,
-    required double durationHours,
+    required int durationMinutes,
     required String token,
   }) async {
     try {
@@ -130,16 +186,18 @@ class ApiService {
         Uri.parse('${ApiConfig.baseUrl}${ApiConfig.choresLog}'),
         headers: _authHeaders(token),
         body: json.encode({
-          'appliance_id': applianceId,
+          'appliance_type': applianceType,
           'start_time': startTime.toIso8601String(),
-          'duration_hours': durationHours,
+          'duration_minutes': durationMinutes,
         }),
       ).timeout(ApiConfig.timeout);
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('Failed to log chore');
+        print('Chore log failed - Status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to log chore: ${response.body}');
       }
     } catch (e) {
       print('Log Chore Error: $e');
@@ -172,4 +230,15 @@ class ApiService {
       };
     }
   }
+}
+
+// Simple response wrapper for instance methods
+class ApiResponse {
+  final dynamic data;
+  final int statusCode;
+
+  ApiResponse({
+    required this.data,
+    required this.statusCode,
+  });
 }

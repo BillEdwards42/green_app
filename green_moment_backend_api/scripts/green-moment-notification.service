@@ -1,0 +1,15 @@
+[Unit]
+Description=Green Moment Notification Scheduler
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=bill
+WorkingDirectory=/home/bill/StudioProjects/green_moment_backend_api
+Environment="PATH=/home/bill/StudioProjects/green_moment_backend_api/venv/bin"
+ExecStart=/home/bill/StudioProjects/green_moment_backend_api/venv/bin/python /home/bill/StudioProjects/green_moment_backend_api/scripts/run_notification_scheduler_fixed.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
