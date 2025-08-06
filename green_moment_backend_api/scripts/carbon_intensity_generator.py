@@ -145,16 +145,20 @@ class CarbonIntensityGenerator:
                 return None
             
             # Get update time from response
-            update_time_str = data.get('更新時間', '')
+            # Taipower API uses empty string key for timestamp
+            update_time_str = data.get('', '') or data.get('更新時間', '')
             if not update_time_str:
                 # Use current time rounded down to nearest 10 minutes
                 now = datetime.now(TAIWAN_TZ)
                 minutes = (now.minute // 10) * 10
                 update_time = now.replace(minute=minutes, second=0, microsecond=0)
             else:
-                # Parse the update time
+                # Parse the update time and ensure it's on the X0 minute
                 update_time = datetime.strptime(update_time_str, "%Y-%m-%d %H:%M")
                 update_time = TAIWAN_TZ.localize(update_time)
+                # Round down to nearest 10 minutes to ensure X0 timestamp
+                minutes = (update_time.minute // 10) * 10
+                update_time = update_time.replace(minute=minutes, second=0, microsecond=0)
             
             # Process data by region
             regional_data = {
@@ -421,16 +425,19 @@ class CarbonIntensityGenerator:
         print(f"Total Generation: {current_details['total_generation_mw']:.2f} MW")
         print(f"Data Timestamp: {update_time}")
         
-        # Log current intensity to CSV
-        self._log_to_csv(timestamp_str, current_intensity)
+        # Use the update_time (X0 minute) for all logging
+        update_timestamp_str = update_time.strftime('%Y-%m-%d %H:%M:%S')
         
-        # Log fluctuations and weather
-        self.log_fluctuations(detailed_plant_data, timestamp_str)
-        self.log_weather_analysis(weather_data, timestamp_str)
+        # Log current intensity to CSV with X0 timestamp
+        self._log_to_csv(update_timestamp_str, current_intensity)
         
-        # Prepare and update cache
+        # Log fluctuations and weather with X0 timestamp
+        self.log_fluctuations(detailed_plant_data, update_timestamp_str)
+        self.log_weather_analysis(weather_data, update_timestamp_str)
+        
+        # Prepare and update cache with X0 timestamp
         cache_data = self.combine_data_for_cache(generation_data, weather_data, update_time)
-        self.cache_manager.add_timestep_data(timestamp_str, cache_data)
+        self.cache_manager.add_timestep_data(update_timestamp_str, cache_data)
         
         # Check cache status
         cache_status = self.cache_manager.get_cache_status()
@@ -475,13 +482,13 @@ class CarbonIntensityGenerator:
         print('='*60)
     
     def _log_to_csv(self, timestamp: str, intensity: float):
-        """Log carbon intensity to CSV file"""
+        """Log carbon intensity (CO2e) to CSV file"""
         file_exists = self.csv_log_path.exists()
         
         with open(self.csv_log_path, 'a', newline='') as f:
             writer = csv.writer(f)
             if not file_exists:
-                writer.writerow(['timestamp', 'carbon_intensity_kgco2_kwh'])
+                writer.writerow(['timestamp', 'carbon_intensity_kgco2e_kwh'])
             writer.writerow([timestamp, f"{intensity:.6f}"])
     
     def _prepare_output_json(self, intensity, details, cache_status, forecast_data, update_time):
@@ -505,7 +512,7 @@ class CarbonIntensityGenerator:
                 generation_mw_all['Storage'] = storage_mw
         
         output = {
-            'last_updated': datetime.now().isoformat(),
+            'last_updated': update_time.isoformat(),  # Use X0 timestamp instead of current time
             'status': 'complete' if cache_status['ready'] else 'building_cache',
             'current': {
                 'carbon_intensity': round(intensity, 3),
@@ -548,7 +555,7 @@ class CarbonIntensityGenerator:
         app_output = {
             'last_updated': output['last_updated'],
             'current_intensity': {
-                'gCO2_kWh': int(output['current']['carbon_intensity'] * 1000),  # Convert kg to g
+                'gCO2e_kWh': int(output['current']['carbon_intensity'] * 1000),  # Convert kg to g
                 'level': 'red'  # Will be calculated based on forecast
             },
             'forecast': [],
@@ -564,7 +571,7 @@ class CarbonIntensityGenerator:
             values = output['forecast']['values']
             timestamps = output['forecast']['timestamps']
             
-            # Convert all values to gCO2/kWh
+            # Convert all values to gCO2e/kWh
             g_values = [int(v * 1000) for v in values]
             
             # Calculate percentiles for level assignment
@@ -573,7 +580,7 @@ class CarbonIntensityGenerator:
             p67 = sorted_values[int(len(sorted_values) * 0.67)]
             
             # Assign current level based on percentiles
-            current_g = app_output['current_intensity']['gCO2_kWh']
+            current_g = app_output['current_intensity']['gCO2e_kWh']
             if current_g <= p33:
                 app_output['current_intensity']['level'] = 'green'
             elif current_g <= p67:
@@ -596,7 +603,7 @@ class CarbonIntensityGenerator:
                 
                 app_output['forecast'].append({
                     'time': time_str,
-                    'gCO2_kWh': value,
+                    'gCO2e_kWh': value,
                     'level': level
                 })
             

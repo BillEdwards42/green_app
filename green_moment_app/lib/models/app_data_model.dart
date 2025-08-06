@@ -36,6 +36,8 @@ class AppDataModel {
   }
 
   String get formattedLastUpdated {
-    return '${lastUpdated.month}/${lastUpdated.day} ${lastUpdated.hour.toString().padLeft(2, '0')}:${lastUpdated.minute.toString().padLeft(2, '0')} 即時碳強度';
+    // Round down to nearest 10 minutes to show X0 time
+    final roundedMinute = (lastUpdated.minute ~/ 10) * 10;
+    return '${lastUpdated.month}/${lastUpdated.day} ${lastUpdated.hour.toString().padLeft(2, '0')}:${roundedMinute.toString().padLeft(2, '0')} 即時碳強度';
   }
 }

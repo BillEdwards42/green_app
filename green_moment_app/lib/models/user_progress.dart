@@ -4,6 +4,7 @@ class UserProgress {
   final DateTime? lastCalculationDate;
   final List<TaskProgress> currentMonthTasks;
   final DateTime lastUpdated;
+  final bool shouldShowLeagueUpgrade;
 
   UserProgress({
     required this.currentLeague,
@@ -11,6 +12,7 @@ class UserProgress {
     this.lastCalculationDate,
     required this.currentMonthTasks,
     required this.lastUpdated,
+    this.shouldShowLeagueUpgrade = false,
   });
 
   factory UserProgress.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class UserProgress {
               .toList() ??
           [],
       lastUpdated: DateTime.parse(json['lastUpdated']),
+      shouldShowLeagueUpgrade: json['shouldShowLeagueUpgrade'] ?? false,
     );
   }
 
@@ -35,6 +38,7 @@ class UserProgress {
       'lastCalculationDate': lastCalculationDate?.toIso8601String(),
       'currentMonthTasks': currentMonthTasks.map((task) => task.toJson()).toList(),
       'lastUpdated': lastUpdated.toIso8601String(),
+      'shouldShowLeagueUpgrade': shouldShowLeagueUpgrade,
     };
   }
 }

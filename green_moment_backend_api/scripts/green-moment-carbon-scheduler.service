@@ -1,0 +1,20 @@
+[Unit]
+Description=Green Moment Carbon Daily Scheduler
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=bill
+Group=bill
+WorkingDirectory=/home/bill/StudioProjects/green_moment_backend_api
+Environment="PYTHONPATH=/home/bill/StudioProjects/green_moment_backend_api"
+ExecStart=/home/bill/StudioProjects/green_moment_backend_api/venv/bin/python /home/bill/StudioProjects/green_moment_backend_api/scripts/carbon_daily_scheduler.py
+Restart=always
+RestartSec=30
+
+# Logging
+StandardOutput=append:/home/bill/StudioProjects/green_moment_backend_api/logs/carbon_scheduler_systemd.log
+StandardError=append:/home/bill/StudioProjects/green_moment_backend_api/logs/carbon_scheduler_systemd_error.log
+
+[Install]
+WantedBy=multi-user.target

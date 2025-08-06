@@ -7,8 +7,8 @@ from app.core.database import Base
 
 
 class PlatformType(str, enum.Enum):
-    ANDROID = "android"  # Database stores lowercase
-    IOS = "ios"  # Database stores lowercase
+    android = "android"  # Match database enum values
+    ios = "ios"  # Match database enum values
 
 
 class NotificationStatus(str, enum.Enum):

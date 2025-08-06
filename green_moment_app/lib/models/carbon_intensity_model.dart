@@ -9,14 +9,14 @@ class CarbonIntensityModel {
 
   factory CarbonIntensityModel.fromJson(Map<String, dynamic> json) {
     return CarbonIntensityModel(
-      gco2KWh: json['gCO2_kWh'].toDouble(),
+      gco2KWh: (json['gCO2_kWh'] ?? json['gCO2e_kWh'] ?? 0).toDouble(),
       level: json['level'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'gCO2_kWh': gco2KWh,
+      'gCO2e_kWh': gco2KWh,
       'level': level,
     };
   }

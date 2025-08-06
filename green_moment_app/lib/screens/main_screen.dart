@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../widgets/custom_bottom_nav.dart';
+import '../widgets/promotion_check_wrapper.dart';
+import '../services/user_progress_service.dart';
 import 'home_screen.dart';
 import 'logger_screen.dart';
 import 'dashboard_screen.dart';
@@ -15,6 +17,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 1; // Start with home screen (middle tab)
   final GlobalKey<DashboardScreenState> _dashboardKey = GlobalKey<DashboardScreenState>();
+  final UserProgressService _progressService = UserProgressService();
+  String? _previousLeague;
 
   late final List<Widget> _screens;
 
@@ -26,6 +30,16 @@ class _MainScreenState extends State<MainScreen> {
       const HomeScreen(),
       DashboardScreen(key: _dashboardKey),
     ];
+    _loadPreviousLeague();
+  }
+
+  Future<void> _loadPreviousLeague() async {
+    print('🏆 MainScreen: Loading previous league...');
+    final league = await _progressService.getPreviousLeague();
+    print('🏆 MainScreen: Previous league loaded: $league');
+    setState(() {
+      _previousLeague = league;
+    });
   }
 
   void _onNavTap(int index) {
@@ -41,15 +55,19 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bgPrimary,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: CustomBottomNav(
-        currentIndex: _currentIndex,
-        onTap: _onNavTap,
+    // Show the app immediately, don't wait for previous league
+    return PromotionCheckWrapper(
+      previousLeague: _previousLeague, // Can be null initially
+      child: Scaffold(
+        backgroundColor: AppColors.bgPrimary,
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _screens,
+        ),
+        bottomNavigationBar: CustomBottomNav(
+          currentIndex: _currentIndex,
+          onTap: _onNavTap,
+        ),
       ),
     );
   }

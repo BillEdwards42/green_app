@@ -20,6 +20,7 @@ class UserProfileResponse(BaseModel):
     is_anonymous: bool
     current_league: str
     total_carbon_saved: float
+    current_month_carbon_saved: float
     current_month_tasks_completed: int
     created_at: datetime
     

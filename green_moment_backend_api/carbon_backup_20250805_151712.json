@@ -1,0 +1,473 @@
+{
+  "timestamp": "2025-08-05T15:17:12.590465",
+  "users": [
+    {
+      "id": 1,
+      "username": "hoya",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 2,
+      "username": "hoygya",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 3,
+      "username": "hi",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 5,
+      "username": "hiyaya",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 6,
+      "username": "fung",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 7,
+      "username": "\u64ca\u6557\u554a",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 8,
+      "username": "ho",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 9,
+      "username": "User_google_8",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 10,
+      "username": "User_google_f",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 12,
+      "username": "\u963f\u4e86",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 13,
+      "username": "hii",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 14,
+      "username": "hiy7",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 15,
+      "username": "\u6211",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 16,
+      "username": "giga fin",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 17,
+      "username": "hyu",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 18,
+      "username": "\u6d17\u5427",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 19,
+      "username": "f",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 20,
+      "username": "faj",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 21,
+      "username": "hso",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 22,
+      "username": "jcie",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 23,
+      "username": "xjks",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 24,
+      "username": "cefh",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 25,
+      "username": "fghn",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 26,
+      "username": "dkke",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 27,
+      "username": "kfokr",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 28,
+      "username": "shi",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 29,
+      "username": "hij",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 30,
+      "username": "hijj",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 31,
+      "username": "hijjj",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 32,
+      "username": "hijjjj",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 33,
+      "username": "hijjjjj",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 37,
+      "username": "test_notification_user",
+      "total_carbon_saved": 0.0,
+      "current_month_carbon_saved": 0.0
+    },
+    {
+      "id": 36,
+      "username": "edwards_test1",
+      "total_carbon_saved": 9.332097592952383,
+      "current_month_carbon_saved": 4.653344791666665
+    }
+  ],
+  "daily_progress": [
+    {
+      "id": 5,
+      "user_id": 36,
+      "date": "2025-08-01",
+      "daily_carbon_saved": 4.653344791666665,
+      "cumulative_carbon_saved": 4.653344791666665
+    },
+    {
+      "id": 6,
+      "user_id": 36,
+      "date": "2025-08-02",
+      "daily_carbon_saved": 0.0005820833333333719,
+      "cumulative_carbon_saved": 4.653926874999999
+    },
+    {
+      "id": 7,
+      "user_id": 36,
+      "date": "2025-08-03",
+      "daily_carbon_saved": 0.35523750000000076,
+      "cumulative_carbon_saved": 5.009164374999999
+    },
+    {
+      "id": 8,
+      "user_id": 36,
+      "date": "2025-08-04",
+      "daily_carbon_saved": 4.322933217952385,
+      "cumulative_carbon_saved": 9.332097592952383
+    }
+  ],
+  "monthly_summaries": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 4,
+      "user_id": 5,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 5,
+      "user_id": 6,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 6,
+      "user_id": 7,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 7,
+      "user_id": 8,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 8,
+      "user_id": 9,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 9,
+      "user_id": 10,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 10,
+      "user_id": 12,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 11,
+      "user_id": 13,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 12,
+      "user_id": 14,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 13,
+      "user_id": 15,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 14,
+      "user_id": 16,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 15,
+      "user_id": 17,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 16,
+      "user_id": 18,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 17,
+      "user_id": 19,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 18,
+      "user_id": 20,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 19,
+      "user_id": 21,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 20,
+      "user_id": 22,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 21,
+      "user_id": 23,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 22,
+      "user_id": 24,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 23,
+      "user_id": 25,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 24,
+      "user_id": 26,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 25,
+      "user_id": 27,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 26,
+      "user_id": 28,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 27,
+      "user_id": 29,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 28,
+      "user_id": 30,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 29,
+      "user_id": 31,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 30,
+      "user_id": 32,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 31,
+      "user_id": 33,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 32,
+      "user_id": 37,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 0.0
+    },
+    {
+      "id": 33,
+      "user_id": 36,
+      "month": 8,
+      "year": 2025,
+      "total_carbon_saved": 8.608862124999996
+    },
+    {
+      "id": 34,
+      "user_id": 36,
+      "month": 7,
+      "year": 2025,
+      "total_carbon_saved": 0.48
+    }
+  ]
+}

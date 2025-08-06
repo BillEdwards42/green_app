@@ -1,0 +1,14 @@
+{
+  "username": "edwards_test1",
+  "user_id": 36,
+  "original_league": "emerald",
+  "original_total_carbon": 9332.097592952383,
+  "original_month_carbon": 20115.761427873014,
+  "backup_time": "2025-08-06T15:15:08.829136",
+  "had_monthly_summary": true,
+  "summary_id": 33,
+  "summary_carbon": 20115.761427873014,
+  "summary_league_start": "silver",
+  "summary_league_end": "emerald",
+  "summary_upgraded": true
+}

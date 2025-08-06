@@ -13,7 +13,7 @@ class MonthlySummary(Base):
     year = Column(Integer, nullable=False)  # Year
     
     # Carbon metrics
-    total_carbon_saved = Column(Float, default=0.0, nullable=False)  # kg CO2 saved this month
+    total_carbon_saved = Column(Float, default=0.0, nullable=False)  # kg CO2e saved this month
     total_chores_logged = Column(Integer, default=0, nullable=False)  # Number of chores
     total_hours_shifted = Column(Float, default=0.0, nullable=False)  # Total hours of appliance usage
     

@@ -113,7 +113,7 @@ def main():
     for timestamp, values in recent_duplicates:
         print(f"\n{timestamp}:")
         for i, value in enumerate(values):
-            print(f"  Entry {i+1}: {value:.6f} kgCO2/kWh")
+            print(f"  Entry {i+1}: {value:.6f} kgCO2e/kWh")
         diff = abs(values[1] - values[0])
         diff_pct = (diff / values[0]) * 100
         print(f"  Difference: {diff:.6f} ({diff_pct:.2f}%)")
@@ -127,7 +127,7 @@ def main():
     for file_path, data in gen_files.items():
         print(f"\nFile: {file_path}")
         print(f"Timestamp: {data['timestamp']}")
-        print(f"Carbon Intensity: {data['intensity']} kgCO2/kWh")
+        print(f"Carbon Intensity: {data['intensity']} kgCO2e/kWh")
         print(f"Total Generation: {data['total_generation']} MW")
         
         if data['generation_mw']:
@@ -157,7 +157,7 @@ def main():
     calc_log = load_carbon_log()
     if calc_log:
         print(f"\nCalculation timestamp: {calc_log.get('timestamp', 'unknown')}")
-        print(f"National intensity: {calc_log.get('national_intensity', 0):.6f} kgCO2/kWh")
+        print(f"National intensity: {calc_log.get('national_intensity', 0):.6f} kgCO2e/kWh")
         print(f"Total generation: {calc_log.get('total_generation_mw', 0):.2f} MW")
         
         if 'fuel_details' in calc_log:

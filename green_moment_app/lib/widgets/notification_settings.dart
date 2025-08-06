@@ -115,6 +115,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _scheduledTime,
+      helpText: '選擇通知時間\n(將調整至最接近的10分鐘)',
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -175,12 +176,60 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     );
 
     if (picked != null && picked != _scheduledTime) {
+      // Round to nearest 10-minute increment
+      int roundedMinute = (picked.minute / 10).round() * 10;
+      if (roundedMinute == 60) {
+        roundedMinute = 0;
+      }
+      
+      final adjustedTime = TimeOfDay(hour: picked.hour, minute: roundedMinute);
+      
+      // Show confirmation if time was adjusted
+      if (picked.minute != roundedMinute) {
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: AppColors.bgPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              title: const Text(
+                '時間已調整',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              content: Text(
+                '您選擇的 ${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')} '
+                '已調整為 ${adjustedTime.hour.toString().padLeft(2, '0')}:${adjustedTime.minute.toString().padLeft(2, '0')}',
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text(
+                    '確定',
+                    style: TextStyle(color: AppColors.accent),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+      
       setState(() {
-        _scheduledTime = picked;
+        _scheduledTime = adjustedTime;
       });
       
       // Update backend with 24-hour format
-      final timeStr = '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
+      final timeStr = '${adjustedTime.hour.toString().padLeft(2, '0')}:${adjustedTime.minute.toString().padLeft(2, '0')}';
       await _notificationService.setScheduledTime(timeStr);
     }
   }

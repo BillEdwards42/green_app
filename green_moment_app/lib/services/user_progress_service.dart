@@ -7,8 +7,12 @@ import '../services/api_service.dart';
 class UserProgressService {
   static const String _metricsKey = 'usage_metrics';
   static const String _leagueUpgradeShownKey = 'league_upgrade_shown';
+  static const String _previousLeagueKey = 'previous_league';
   
   final ApiService _apiService = ApiService();
+  
+  // Getter for API service
+  ApiService get apiService => _apiService;
 
   // Get current user progress from API
   Future<UserProgress> getUserProgress() async {
@@ -16,6 +20,7 @@ class UserProgressService {
       // Get progress summary from API
       final progressResponse = await _apiService.get('/progress/summary');
       print('Progress response data: ${progressResponse.data}');
+      print('🔍 API Response - should_show_league_upgrade: ${progressResponse.data['should_show_league_upgrade']}');
       
       // Get current tasks from API
       final tasksResponse = await _apiService.get('/tasks/my-tasks');
@@ -28,14 +33,18 @@ class UserProgressService {
       // Safely access fields with null checks
       final progressData = progressResponse.data as Map<String, dynamic>;
       
+      // Before returning, save the current league
+      await savePreviousLeague(progressData['current_league'] ?? 'bronze');
+      
       return UserProgress(
         currentLeague: progressData['current_league'] ?? 'bronze',
-        lastMonthCarbonSaved: progressData['last_month_carbon_saved']?.toDouble(),
+        lastMonthCarbonSaved: progressData['last_month_co2e_saved_g']?.toDouble(),
         lastCalculationDate: progressData['last_calculation_date'] != null
             ? DateTime.parse(progressData['last_calculation_date'])
             : null,
         currentMonthTasks: tasks,
         lastUpdated: DateTime.now(),
+        shouldShowLeagueUpgrade: progressData['should_show_league_upgrade'] ?? false,
       );
     } catch (e, stackTrace) {
       print('Error fetching user progress: $e');
@@ -257,6 +266,15 @@ class UserProgressService {
     }
   }
 
+  // Mark league upgrade as shown
+  Future<void> markLeagueUpgradeShown() async {
+    try {
+      await _apiService.post('/progress/mark-league-upgrade-shown');
+    } catch (e) {
+      print('Error marking league upgrade as shown: $e');
+    }
+  }
+
   // Helper methods
   bool _isCurrentMonth(DateTime date) {
     final now = DateTime.now();
@@ -305,5 +323,21 @@ class UserProgressService {
 
   bool _hasLoggedEveryDay(List<DateTime> timestamps) {
     return _hasOpenedEveryDay(timestamps);
+  }
+
+  // Get previous league from SharedPreferences
+  Future<String?> getPreviousLeague() async {
+    final prefs = await SharedPreferences.getInstance();
+    final league = prefs.getString(_previousLeagueKey);
+    print('📊 getPreviousLeague: $league');
+    return league;
+  }
+
+  // Save previous league to SharedPreferences
+  Future<void> savePreviousLeague(String league) async {
+    final prefs = await SharedPreferences.getInstance();
+    final previousLeague = await getPreviousLeague();
+    print('📊 savePreviousLeague: $previousLeague -> $league');
+    await prefs.setString(_previousLeagueKey, league);
   }
 }

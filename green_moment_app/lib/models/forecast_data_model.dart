@@ -12,7 +12,7 @@ class ForecastDataModel {
   factory ForecastDataModel.fromJson(Map<String, dynamic> json) {
     return ForecastDataModel(
       time: json['time'] as String,
-      gco2KWh: json['gCO2_kWh'].toDouble(),
+      gco2KWh: (json['gCO2_kWh'] ?? json['gCO2e_kWh'] ?? 0).toDouble(),
       level: json['level'] as String,
     );
   }
@@ -20,7 +20,7 @@ class ForecastDataModel {
   Map<String, dynamic> toJson() {
     return {
       'time': time,
-      'gCO2_kWh': gco2KWh,
+      'gCO2e_kWh': gco2KWh,
       'level': level,
     };
   }

@@ -90,7 +90,7 @@ class LeaguePromotionService:
             )
             
             # Carbon saved = (worst_case - actual) * kW * hours
-            # Note: carbon intensity is already in kg CO2/kWh
+            # Note: carbon intensity is already in kg CO2e/kWh
             carbon_saved = (worst_case_intensity - actual_carbon_intensity) * appliance_kw * duration_hours
             total_carbon_saved += max(0, carbon_saved)  # Only count positive savings
             total_hours += duration_hours

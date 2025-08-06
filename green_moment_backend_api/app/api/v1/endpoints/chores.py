@@ -47,6 +47,7 @@ async def log_chore(
     return ChoreLogResponse.from_orm(chore)
 
 
+
 @router.get("/history", response_model=ChoreHistoryResponse)
 async def get_chore_history(
     limit: Optional[int] = 50,

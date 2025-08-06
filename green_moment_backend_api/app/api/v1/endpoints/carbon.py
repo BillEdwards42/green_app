@@ -13,7 +13,7 @@ router = APIRouter()
 @router.get("/latest")
 async def get_latest_carbon_data():
     """
-    Get the latest carbon intensity data including current and 24hr forecast
+    Get the latest carbon intensity (CO2e) data including current and 24hr forecast
     This endpoint serves the pre-generated JSON file
     """
     json_path = Path("data/carbon_intensity.json")
@@ -34,7 +34,7 @@ async def get_latest_carbon_data():
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Error reading carbon intensity data: {str(e)}"
+            detail=f"Error reading carbon intensity (CO2e) data: {str(e)}"
         )
 
 
@@ -64,7 +64,7 @@ async def get_current_intensity():
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Error reading carbon intensity data: {str(e)}"
+            detail=f"Error reading carbon intensity (CO2e) data: {str(e)}"
         )
 
 
@@ -94,7 +94,7 @@ async def get_forecast():
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Error reading carbon intensity data: {str(e)}"
+            detail=f"Error reading carbon intensity (CO2e) data: {str(e)}"
         )
 
 
@@ -121,7 +121,7 @@ async def get_generator_status():
             "last_updated": data['last_updated'],
             "age_minutes": round(age_minutes, 1),
             "forecast_hours": len(data.get('forecast', [])),
-            "current_intensity": data.get('current_intensity', {}).get('gCO2_kWh', 0)
+            "current_intensity": data.get('current_intensity', {}).get('gCO2e_kWh', 0)
         }
         
     except Exception as e:

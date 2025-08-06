@@ -66,7 +66,7 @@ async def simulate_last_month_activity(user_id: int, complete_all_tasks: bool = 
             {
                 "appliance": "washing_machine",
                 "duration": 60,
-                "carbon_intensity": 0.450,  # kg CO2/kWh
+                "carbon_intensity": 0.450,  # kg CO2e/kWh
                 "day": 5
             },
             {
@@ -113,7 +113,7 @@ async def simulate_last_month_activity(user_id: int, complete_all_tasks: bool = 
             db.add(chore)
             
             # Calculate carbon saved (simplified)
-            # Assume worst case is 0.600 kg CO2/kWh
+            # Assume worst case is 0.600 kg CO2e/kWh
             worst_case = 0.600
             actual = chore_data["carbon_intensity"]
             appliance_kw = APPLIANCE_POWER.get(chore_data["appliance"], 1.0)

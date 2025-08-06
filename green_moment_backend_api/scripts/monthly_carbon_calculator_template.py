@@ -124,7 +124,7 @@ class MonthlyCarbonCalculator:
         )
         
         session.add(summary)
-        logger.info(f"User {user.username}: {total_carbon_saved:.2f} kg CO2 saved in {start_date.strftime('%B %Y')}")
+        logger.info(f"User {user.username}: {total_carbon_saved:.2f} kg CO2e saved in {start_date.strftime('%B %Y')}")
     
     def calculate_chore_carbon_saved(self, chore, carbon_data):
         """Calculate carbon saved for a single chore"""

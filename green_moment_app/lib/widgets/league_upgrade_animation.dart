@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import '../constants/app_colors.dart';
 
 class LeagueUpgradeAnimation extends StatefulWidget {
@@ -87,37 +88,37 @@ class _LeagueUpgradeAnimationState extends State<LeagueUpgradeAnimation>
     switch (league) {
       case 'bronze':
         return {
-          'name': '銅級',
+          'name': '銅聯盟',
           'color': const Color(0xFFCD7F32),
           'icon': Icons.shield_outlined,
         };
       case 'silver':
         return {
-          'name': '銀級',
+          'name': '銀聯盟',
           'color': const Color(0xFFC0C0C0),
           'icon': Icons.shield_outlined,
         };
       case 'gold':
         return {
-          'name': '金級',
+          'name': '金聯盟',
           'color': const Color(0xFFFFD700),
           'icon': Icons.shield,
         };
       case 'emerald':
         return {
-          'name': '翡翠級',
+          'name': '翡翠聯盟',
           'color': const Color(0xFF50C878),
           'icon': Icons.shield,
         };
       case 'diamond':
         return {
-          'name': '鑽石級',
+          'name': '鑽石聯盟',
           'color': const Color(0xFFB9F2FF),
           'icon': Icons.stars,
         };
       default:
         return {
-          'name': '銅級',
+          'name': '銅聯盟',
           'color': const Color(0xFFCD7F32),
           'icon': Icons.shield_outlined,
         };
@@ -199,8 +200,8 @@ class _LeagueUpgradeAnimationState extends State<LeagueUpgradeAnimation>
         final progress = _particleController.value;
         final angle = (index / 20) * 2 * 3.14159;
         final radius = 100 + (progress * 200);
-        final x = MediaQuery.of(context).size.width / 2 + radius * Math.cos(angle);
-        final y = MediaQuery.of(context).size.height / 2 + radius * Math.sin(angle);
+        final x = MediaQuery.of(context).size.width / 2 + radius * math.cos(angle);
+        final y = MediaQuery.of(context).size.height / 2 + radius * math.sin(angle);
         
         return Positioned(
           left: x,
@@ -216,18 +217,5 @@ class _LeagueUpgradeAnimationState extends State<LeagueUpgradeAnimation>
         );
       },
     );
-  }
-}
-
-// TODO: Replace with dart:math when available
-class Math {
-  static double cos(double radians) {
-    // Simple approximation for demo
-    return 1.0;
-  }
-  
-  static double sin(double radians) {
-    // Simple approximation for demo
-    return 0.0;
   }
 }

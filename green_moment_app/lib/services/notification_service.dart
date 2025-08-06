@@ -83,19 +83,28 @@ class NotificationService {
 
   Future<void> _getAndSaveToken() async {
     try {
+      print('🔑 Getting FCM token...');
       _deviceToken = await _messaging.getToken();
       
       if (_deviceToken != null) {
+        print('🔑 Got FCM token: ${_deviceToken!.substring(0, 50)}...');
         // Save locally
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString(_deviceTokenKey, _deviceToken!);
         
         // Send to backend if authenticated
         await _registerTokenWithBackend(_deviceToken!);
+      } else {
+        print('❌ FCM token is null');
       }
     } catch (e) {
-      print('Error getting FCM token: $e');
+      print('❌ Error getting FCM token: $e');
     }
+  }
+  
+  // Call this when user logs in to ensure fresh token
+  Future<void> refreshToken() async {
+    await _getAndSaveToken();
   }
 
   Future<void> _handleTokenRefresh(String newToken) async {
@@ -110,8 +119,12 @@ class NotificationService {
   }
 
   Future<void> _registerTokenWithBackend(String token) async {
+    print('📤 Attempting to register FCM token with backend...');
     final authService = AuthService();
-    if (!authService.isAuthenticated) return;
+    if (!authService.isAuthenticated) {
+      print('❌ Not authenticated, skipping FCM token registration');
+      return;
+    }
     
     try {
       final deviceId = await _getDeviceId();

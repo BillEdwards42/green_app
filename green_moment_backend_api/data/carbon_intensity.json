@@ -1,10 +1,540 @@
 {
-  "last_updated": "2025-08-05T13:19:00.881110",
+  "last_updated": "2025-08-06T19:39:01.794763",
   "current_intensity": {
-    "gCO2_kWh": 464,
-    "level": "green"
+    "gCO2_kWh": 559,
+    "level": "red"
   },
   "forecast": [
+    {
+      "time": "19:40",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "19:50",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "20:00",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "20:10",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "20:20",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "20:30",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "20:40",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "20:50",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "21:00",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "21:10",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "21:20",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "21:30",
+      "gCO2_kWh": 488,
+      "level": "red"
+    },
+    {
+      "time": "21:40",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "21:50",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "22:00",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "22:10",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "22:20",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "22:30",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "22:40",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "22:50",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "23:00",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "23:10",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "23:20",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "23:30",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "23:40",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "23:50",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "00:00",
+      "gCO2_kWh": 487,
+      "level": "red"
+    },
+    {
+      "time": "00:10",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "00:20",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "00:30",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "00:40",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "00:50",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "01:00",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "01:10",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "01:20",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "01:30",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "01:40",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "01:50",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "02:00",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "02:10",
+      "gCO2_kWh": 486,
+      "level": "red"
+    },
+    {
+      "time": "02:20",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "02:30",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "02:40",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "02:50",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "03:00",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "03:10",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "03:20",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "03:30",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "03:40",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "03:50",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "04:00",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "04:10",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "04:20",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "04:30",
+      "gCO2_kWh": 485,
+      "level": "red"
+    },
+    {
+      "time": "04:40",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "04:50",
+      "gCO2_kWh": 484,
+      "level": "yellow"
+    },
+    {
+      "time": "05:00",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "05:10",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "05:20",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "05:30",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "05:40",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "05:50",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "06:00",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "06:10",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "06:20",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "06:30",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "06:40",
+      "gCO2_kWh": 483,
+      "level": "yellow"
+    },
+    {
+      "time": "06:50",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:00",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:10",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:20",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:30",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:40",
+      "gCO2_kWh": 482,
+      "level": "green"
+    },
+    {
+      "time": "07:50",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "08:00",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "08:10",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "08:20",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "08:30",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "08:40",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "08:50",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "09:00",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "09:10",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "09:20",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "09:30",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "09:40",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "09:50",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "10:00",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "10:10",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "10:20",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "10:30",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "10:40",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "10:50",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "11:00",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "11:10",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "11:20",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "11:30",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "11:40",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "11:50",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "12:00",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "12:10",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "12:20",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "12:30",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
+      "time": "12:40",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "12:50",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "13:00",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
+    {
+      "time": "13:10",
+      "gCO2_kWh": 480,
+      "level": "green"
+    },
     {
       "time": "13:20",
       "gCO2_kWh": 482,
@@ -12,93 +542,93 @@
     },
     {
       "time": "13:30",
-      "gCO2_kWh": 482,
+      "gCO2_kWh": 481,
       "level": "green"
     },
     {
       "time": "13:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 480,
+      "level": "green"
     },
     {
       "time": "13:50",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "14:00",
-      "gCO2_kWh": 482,
+      "gCO2_kWh": 481,
       "level": "green"
     },
     {
       "time": "14:10",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "14:20",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "14:30",
-      "gCO2_kWh": 482,
+      "gCO2_kWh": 481,
       "level": "green"
     },
     {
       "time": "14:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "14:50",
       "gCO2_kWh": 482,
       "level": "green"
     },
     {
+      "time": "14:50",
+      "gCO2_kWh": 481,
+      "level": "green"
+    },
+    {
       "time": "15:00",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 480,
+      "level": "green"
     },
     {
       "time": "15:10",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "15:20",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "15:30",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "15:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "15:50",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "16:00",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 481,
+      "level": "green"
     },
     {
       "time": "16:10",
-      "gCO2_kWh": 484,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "16:20",
-      "gCO2_kWh": 483,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "16:30",
@@ -107,12 +637,12 @@
     },
     {
       "time": "16:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
+      "gCO2_kWh": 482,
+      "level": "green"
     },
     {
       "time": "16:50",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
@@ -122,58 +652,58 @@
     },
     {
       "time": "17:10",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "17:20",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "17:30",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "17:40",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "17:50",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "18:00",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "18:10",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "18:20",
-      "gCO2_kWh": 484,
+      "gCO2_kWh": 483,
       "level": "yellow"
     },
     {
       "time": "18:30",
-      "gCO2_kWh": 485,
-      "level": "red"
+      "gCO2_kWh": 484,
+      "level": "yellow"
     },
     {
       "time": "18:40",
-      "gCO2_kWh": 485,
-      "level": "red"
+      "gCO2_kWh": 484,
+      "level": "yellow"
     },
     {
       "time": "18:50",
-      "gCO2_kWh": 485,
-      "level": "red"
+      "gCO2_kWh": 484,
+      "level": "yellow"
     },
     {
       "time": "19:00",
@@ -194,541 +724,11 @@
       "time": "19:30",
       "gCO2_kWh": 484,
       "level": "yellow"
-    },
-    {
-      "time": "19:40",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "19:50",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "20:00",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "20:10",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "20:20",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "20:30",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "20:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "20:50",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:00",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:10",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:20",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:30",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:40",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "21:50",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "22:00",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "22:10",
-      "gCO2_kWh": 486,
-      "level": "red"
-    },
-    {
-      "time": "22:20",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "22:30",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "22:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "22:50",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "23:00",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "23:10",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "23:20",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "23:30",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "23:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "23:50",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "00:00",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "00:10",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "00:20",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "00:30",
-      "gCO2_kWh": 485,
-      "level": "red"
-    },
-    {
-      "time": "00:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "00:50",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:00",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:10",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:20",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:30",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:40",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "01:50",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "02:00",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "02:10",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "02:20",
-      "gCO2_kWh": 484,
-      "level": "yellow"
-    },
-    {
-      "time": "02:30",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "02:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "02:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "03:00",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "03:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "03:20",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "03:30",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "03:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "03:50",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "04:00",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "04:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "04:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "04:30",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "04:40",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "04:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "05:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "05:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "05:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "05:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "05:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "05:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "06:00",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "06:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "06:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "06:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "06:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "06:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "07:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "07:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "07:20",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "07:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "07:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "07:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "08:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "08:10",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "08:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "08:30",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "08:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "08:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "09:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "09:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "09:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "09:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "09:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "09:50",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "10:00",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "10:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "10:20",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "10:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "10:40",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "10:50",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "11:00",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "11:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "11:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "11:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "11:40",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "11:50",
-      "gCO2_kWh": 481,
-      "level": "green"
-    },
-    {
-      "time": "12:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "12:10",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "12:20",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "12:30",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "12:40",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "12:50",
-      "gCO2_kWh": 483,
-      "level": "yellow"
-    },
-    {
-      "time": "13:00",
-      "gCO2_kWh": 482,
-      "level": "green"
-    },
-    {
-      "time": "13:10",
-      "gCO2_kWh": 482,
-      "level": "green"
     }
   ],
   "recommendation": {
-    "message": "\u96fb\u7db2\u78b3\u5f37\u5ea6\u504f\u4f4e\uff0c\u5efa\u8b70\u4f7f\u7528\u5927\u578b\u5bb6\u96fb\u3002",
-    "start_time": "01:20 PM",
-    "end_time": "01:40 PM"
+    "message": "\u96fb\u7db2\u78b3\u5bc6\u5ea6\u504f\u9ad8\uff0c\u5efa\u8b70\u907f\u514d\u4f7f\u7528\u5927\u578b\u8017\u96fb\u8a2d\u5099\u3002",
+    "start_time": "09:50 PM",
+    "end_time": "11:50 PM"
   }
 }

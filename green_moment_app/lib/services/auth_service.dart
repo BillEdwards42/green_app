@@ -114,10 +114,11 @@ class AuthService {
           isAnonymous: data['is_anonymous'],
         );
         
-        // Load notification settings after successful sign-in
+        // Load notification settings and refresh FCM token after successful sign-in
         try {
           final notificationService = NotificationService();
           await notificationService.loadSettingsFromBackend();
+          await notificationService.refreshToken();
         } catch (e) {
           print('Failed to load notification settings: $e');
         }
@@ -169,10 +170,11 @@ class AuthService {
           isAnonymous: data['is_anonymous'],
         );
         
-        // Load notification settings after successful sign-in
+        // Load notification settings and refresh FCM token after successful sign-in
         try {
           final notificationService = NotificationService();
           await notificationService.loadSettingsFromBackend();
+          await notificationService.refreshToken();
         } catch (e) {
           print('Failed to load notification settings: $e');
         }

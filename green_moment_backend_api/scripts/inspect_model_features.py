@@ -290,7 +290,7 @@ def inspect_model_features(cache_file='cache/generation_cache.pkl', export_json=
             try:
                 with open('data/carbon_intensity.json', 'r') as f:
                     carbon_data = json.load(f)
-                print(f"Current Carbon Intensity: {carbon_data['current_intensity']['gCO2_kWh']} gCO2/kWh")
+                print(f"Current Carbon Intensity: {carbon_data['current_intensity']['gCO2e_kWh']} gCO2e/kWh")
                 print(f"Level: {carbon_data['current_intensity']['level'].upper()}")
             except:
                 print("Carbon intensity data not available")

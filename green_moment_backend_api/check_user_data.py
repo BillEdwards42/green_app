@@ -123,7 +123,7 @@ def check_all_user_tables(user_id=35):
         summaries = result.fetchall()
         print(f"   Total summaries: {len(summaries)}")
         for summary in summaries:
-            print(f"   - {summary.month}/{summary.year}: {summary.total_carbon_saved} kg CO2 saved")
+            print(f"   - {summary.month}/{summary.year}: {summary.total_carbon_saved} kg CO2e saved")
 
 if __name__ == "__main__":
     check_user_data()
