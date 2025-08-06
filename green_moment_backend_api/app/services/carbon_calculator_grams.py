@@ -77,6 +77,11 @@ class DailyCarbonCalculator:
         target_date: date
     ) -> float:
         """Calculate carbon (CO2e) savings for a specific user on a specific date"""
+        print(f"\n{'='*60}")
+        print(f"🧮 Calculating daily carbon for user: {user.username}")
+        print(f"📅 Date: {target_date}")
+        print(f"{'='*60}")
+        
         # Get chores for the target date
         start_datetime = datetime.combine(target_date, datetime.min.time())
         end_datetime = datetime.combine(target_date, datetime.max.time())
@@ -93,12 +98,15 @@ class DailyCarbonCalculator:
         chores = result.scalars().all()
         
         if not chores:
-            # No chores for this day
+            print("📋 No chores found for this date")
             return 0.0
+        
+        print(f"📋 Found {len(chores)} chores for this date\n")
         
         daily_carbon_saved = 0.0
         
-        for chore in chores:
+        for i, chore in enumerate(chores, 1):
+            print(f"Chore {i}/{len(chores)}:")
             carbon_saved = self._calculate_chore_carbon_saved(chore)
             daily_carbon_saved += carbon_saved
         
@@ -167,6 +175,12 @@ class DailyCarbonCalculator:
         # Always update the last calculation date
         user.last_carbon_calculation_date = target_date
         
+        print(f"\n📊 Daily Summary for {user.username}:")
+        print(f"   - Daily carbon saved: {daily_carbon_saved:.1f}g CO2e")
+        print(f"   - Cumulative for month: {cumulative_total:.1f}g CO2e")
+        print(f"   - Updated current_month_carbon_saved: {user.current_month_carbon_saved:.1f}g")
+        print(f"{'='*60}\n")
+        
         return daily_carbon_saved
     
     def _calculate_chore_carbon_saved(self, chore: Chore) -> float:
@@ -187,6 +201,26 @@ class DailyCarbonCalculator:
         
         # Carbon (CO2e) saved in grams = (worst_case - actual) * kW * hours
         carbon_saved_g = (worst_case_intensity - actual_carbon_intensity) * appliance_kw * duration_hours
+        
+        # Log detailed calculation
+        print(f"""
+📊 Chore Carbon Calculation:
+   - Chore ID: {chore.id}
+   - User: {chore.user_id}
+   - Appliance: {chore.appliance_type} ({appliance_kw} kW)
+   - Start: {chore.start_time.strftime('%Y-%m-%d %H:%M')}
+   - End: {chore.end_time.strftime('%Y-%m-%d %H:%M')}
+   - Duration: {chore.duration_minutes} minutes ({duration_hours:.2f} hours)
+   
+   Intensity Calculation:
+   - Actual avg intensity: {actual_carbon_intensity:.3f} g CO2e/kWh
+   - Worst avg intensity: {worst_case_intensity:.3f} g CO2e/kWh
+   
+   Emission Calculation:
+   - Actual emission: {actual_carbon_intensity:.3f} × {appliance_kw} × {duration_hours:.2f} = {actual_carbon_intensity * appliance_kw * duration_hours:.1f}g
+   - Worst emission: {worst_case_intensity:.3f} × {appliance_kw} × {duration_hours:.2f} = {worst_case_intensity * appliance_kw * duration_hours:.1f}g
+   - Carbon saved: {worst_case_intensity * appliance_kw * duration_hours:.1f} - {actual_carbon_intensity * appliance_kw * duration_hours:.1f} = {carbon_saved_g:.1f}g CO2e
+        """)
         
         return max(0, carbon_saved_g)  # Only count positive savings
     
