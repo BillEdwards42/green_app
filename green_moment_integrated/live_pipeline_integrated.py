@@ -61,8 +61,8 @@ def sanitize_name(name):
 def infer_region_from_name(unit_name):
     """Infer region based on keywords in unit name."""
     region_keywords = {
-        'North': ['林口', '大潭', '新桃', '通霄', '協和', '石門', '翡翠', '桂山', '觀音', '龍潭', '北部'],
-        'Central': ['台中', '大甲溪', '明潭', '彰工', '中港', '竹南', '苗栗', '雲林', '麥寮', '中部', '彰'],
+        'North': ['林口', '大潭', '新桃', '通霄', '協和', '石門', '翡翠', '桂山', '觀音', '龍潭', '北部', '桃園', '國光', '協和', '海湖', '新桃', '松山'],
+        'Central': ['台中', '大甲溪', '明潭', '彰工', '中港', '竹南', '苗栗', '雲林', '麥寮', '中部', '彰', '中能', '水里'],
         'South': ['興達', '大林', '南部', '核三', '曾文', '嘉義', '台南', '高雄', '永安', '屏東'],
         'East': ['和平', '花蓮', '蘭陽', '卑南', '立霧', '東部'], 
         'Islands': ['澎湖', '金門', '馬祖', '塔山', '離島'],
@@ -78,7 +78,6 @@ def load_plant_mapping():
     if PLANT_MAP_FILE.exists():
         try:
             df_map = pd.read_csv(PLANT_MAP_FILE)
-            # Clean any leading/trailing spaces from region names
             df_map['REGION'] = df_map['REGION'].str.strip()
             df_map['UNIT_NAME'] = df_map['UNIT_NAME'].str.strip()
             return dict(zip(df_map['UNIT_NAME'], df_map['REGION']))
@@ -97,41 +96,20 @@ def fetch_generation_data():
         resp.raise_for_status()
         data = resp.json()
         
-        # Get the data array
         live_data = data.get('aaData', [])
         if not live_data:
             print("❌ No aaData found in API response")
             return None, None
         
-        # Process the raw data (same logic as original pipeline)
         records = []
         fuel_map = {
-            '太陽能': 'Solar',
-            '風力': 'Wind', 
-            '燃煤': 'Coal',
-            '燃氣': 'LNG',
-            '水力': 'Hydro',
-            '核能': 'Nuclear',
-            '汽電共生': 'Co-Gen',
-            '民營電廠-燃煤': 'IPP-Coal',
-            '民營電廠-燃氣': 'IPP-LNG',
-            '燃油': 'Oil',
-            '輕油': 'Diesel',
-            '其它再生能源': 'Other_Renewable',
-            '儲能': 'Storage',
-            # Also map the full Chinese names that include English
-            '太陽能(Solar)': 'Solar',
-            '風力(Wind)': 'Wind',
-            '燃煤(Coal)': 'Coal', 
-            '燃氣(LNG)': 'LNG',
-            '水力(Hydro)': 'Hydro',
-            '核能(Nuclear)': 'Nuclear',
-            '汽電共生(Co-Gen)': 'Co-Gen',
-            '民營電廠-燃煤(IPP-Coal)': 'IPP-Coal',
-            '民營電廠-燃氣(IPP-LNG)': 'IPP-LNG',
-            '燃油(Oil)': 'Oil',
-            '輕油(Diesel)': 'Diesel',
-            '其它再生能源(Other Renewable Energy)': 'Other_Renewable',
+            '太陽能': 'Solar', '風力': 'Wind', '燃煤': 'Coal', '燃氣': 'LNG', '水力': 'Hydro',
+            '核能': 'Nuclear', '汽電共生': 'Co-Gen', '民營電廠-燃煤': 'IPP-Coal', '民營電廠-燃氣': 'IPP-LNG',
+            '燃油': 'Oil', '輕油': 'Diesel', '其它再生能源': 'Other_Renewable', '儲能': 'Storage',
+            '太陽能(Solar)': 'Solar', '風力(Wind)': 'Wind', '燃煤(Coal)': 'Coal', '燃氣(LNG)': 'LNG',
+            '水力(Hydro)': 'Hydro', '核能(Nuclear)': 'Nuclear', '汽電共生(Co-Gen)': 'Co-Gen',
+            '民營電廠-燃煤(IPP-Coal)': 'IPP-Coal', '民營電廠-燃氣(IPP-LNG)': 'IPP-LNG', '燃油(Oil)': 'Oil',
+            '輕油(Diesel)': 'Diesel', '其它再生能源(Other Renewable Energy)': 'Other_Renewable',
             '儲能(Energy Storage System)': 'Storage'
         }
         
@@ -142,7 +120,6 @@ def fetch_generation_data():
             unit_name = row[2].strip()
             net_p_str = str(row[4]).replace(',', '')
             
-            # Extract fuel type from HTML
             match = re.search(r'<b>(.*?)</b>', row[0])
             if not match or not unit_name or 'Load' in match.group(1):
                 continue
@@ -150,10 +127,8 @@ def fetch_generation_data():
             fuel_type_zh = match.group(1)
             fuel_type = fuel_map.get(fuel_type_zh, fuel_type_zh)
             
-            # Parse power value (same logic as original)
             net_p = float(net_p_str) if re.match(r'^-?\d+(\.\d+)?$', net_p_str) else None
             
-            # Only include records with valid power values
             if net_p is not None:
                 records.append({
                     'UNIT_NAME': sanitize_name(unit_name),
@@ -168,11 +143,9 @@ def fetch_generation_data():
         
         df = pd.DataFrame(records)
         
-        # Debug: Print fuel types found
         print(f"   -> Fetched data for {len(records)} active power plant units.")
         print(f"   -> Fuel types found: {df['FUEL_TYPE'].value_counts().to_dict()}")
         
-        # Use current time rounded to 10 minutes
         current_time = datetime.now(TAIWAN_TZ)
         effective_minute = (current_time.minute // 10) * 10
         update_dt = current_time.replace(minute=effective_minute, second=0, microsecond=0)
@@ -195,7 +168,6 @@ def fetch_demand_data(timestamp):
         resp.raise_for_status()
         demand_data = resp.json()
         
-        # Check structure (same as original)
         if not demand_data.get('records') or not isinstance(demand_data['records'], list) or not demand_data['records']:
             print("  -> WARNING: 'records' array not found or is empty in demand data. Skipping.")
             return
@@ -208,13 +180,8 @@ def fetch_demand_data(timestamp):
             
         current_load_mw = float(current_load_str.replace(',', ''))
         
-        # Save to CSV
-        demand_df = pd.DataFrame([{
-            'DATETIME': timestamp,
-            'DEMAND_MW': current_load_mw
-        }])
+        demand_df = pd.DataFrame([{'DATETIME': timestamp, 'DEMAND_MW': current_load_mw}])
         
-        # Append new data directly (same as original)
         demand_df.to_csv(DEMAND_FILE, mode='a', header=not DEMAND_FILE.exists(), index=False, encoding='utf-8-sig')
         print(f"   -> Saved current demand ({current_load_mw} MW) to {DEMAND_FILE.name}.")
             
@@ -226,8 +193,7 @@ def read_csv_with_lock(filepath):
     with open(filepath, 'r') as f:
         fcntl.flock(f.fileno(), fcntl.LOCK_SH)
         try:
-            df = pd.read_csv(f)
-            return df
+            return pd.read_csv(f)
         finally:
             fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
@@ -236,176 +202,124 @@ def write_csv_with_lock(df, filepath, mode='w'):
     with open(filepath, mode) as f:
         fcntl.flock(f.fileno(), fcntl.LOCK_EX)
         try:
-            if mode == 'w':
-                df.to_csv(f, index=False)
-            else:
-                df.to_csv(f, index=False, header=False)
+            df.to_csv(f, index=False, header=(mode != 'a'))
         finally:
             fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
 def update_regional_data(df_generation, timestamp):
     """Update regional CSV files with generation data."""
-    # Load plant mapping
+    # --- THIS SECTION IMPLEMENTS THE REQUESTED LOGIC ---
+    # 1. Load the manual mapping file.
     plant_map = load_plant_mapping()
     
-    # Assign regions
+    # 2. Apply the map first. Any plant in the map gets its region assigned.
     df_generation['REGION'] = df_generation['UNIT_NAME'].map(plant_map)
     
-    # Use inference for unmapped plants
+    # 3. For any plants NOT found in the map, use inference as a backup.
     unmapped_mask = df_generation['REGION'].isna()
     df_generation.loc[unmapped_mask, 'REGION'] = df_generation.loc[unmapped_mask, 'UNIT_NAME'].apply(infer_region_from_name)
     
-    # Default to 'Other' for still unmapped
+    # 4. For any plants still unmapped, assign them to 'Other'.
     df_generation['REGION'] = df_generation['REGION'].fillna('Other')
-    
-    # Clean up region names - remove leading/trailing spaces  
+    # --- END SECTION ---
+
     df_generation['REGION'] = df_generation['REGION'].str.strip()
-    
-    # Also clean unit names to ensure consistent mapping
     df_generation['UNIT_NAME'] = df_generation['UNIT_NAME'].str.strip()
     
-    # Debug: Print region assignment and check for East specifically
     print(f"   -> Region distribution: {df_generation['REGION'].value_counts().to_dict()}")
     
-    # Check for any remaining problematic regions and consolidate
-    unique_regions = df_generation['REGION'].unique()
-    problematic_regions = [r for r in unique_regions if r != r.strip()]
-    if problematic_regions:
-        print(f"   -> WARNING: Found regions with spaces: {problematic_regions}")
-        print(f"   -> Consolidating spaced regions...")
-        
-        # Fix any remaining spaced regions by mapping them to clean versions
-        region_fixes = {}
-        for region in unique_regions:
-            cleaned = region.strip()
-            if region != cleaned:
-                region_fixes[region] = cleaned
-        
-        # Apply fixes
-        for old_region, new_region in region_fixes.items():
-            df_generation.loc[df_generation['REGION'] == old_region, 'REGION'] = new_region
-            print(f"   -> Fixed: '{old_region}' -> '{new_region}'")
-    
-    # Debug East region specifically
-    east_data = df_generation[df_generation['REGION'] == 'East']
-    if not east_data.empty:
-        print(f"   -> East region units: {len(east_data)}")
-        print(f"   -> East fuel types: {east_data['FUEL_TYPE'].value_counts().to_dict()}")
-        print(f"   -> East total power: {east_data['NET_P'].sum()} MW")
-    else:
-        print("   -> No East region data found!")
-    
-    # Group by region and fuel type
     regional_summary = df_generation.groupby(['REGION', 'FUEL_TYPE'])['NET_P'].sum().reset_index()
     
-    # Debug: Print regional summary
     print(f"   -> Regional fuel summary:")
     for _, row in regional_summary.iterrows():
-        print(f"      {row['REGION']} - {row['FUEL_TYPE']}: {row['NET_P']} MW")
+        print(f"      {row['REGION']:<8}- {row['FUEL_TYPE']:<16}: {row['NET_P']: >7.1f} MW")
     
-    # Process each region
-    for region in regional_summary['REGION'].unique():
+    for region in df_generation['REGION'].unique():
         csv_path = STRU_DATA_DIR / f"{region}.csv"
         region_data = regional_summary[regional_summary['REGION'] == region]
         
-        # Debug East region specifically
-        if region == 'East':
-            print(f"   -> Processing East region CSV...")
-            print(f"   -> East region_data:")
-            for _, row in region_data.iterrows():
-                print(f"      {row['FUEL_TYPE']}: {row['NET_P']} MW")
-        
-        # Create row with timestamp and fuel columns
         row_data = {'Timestamp': timestamp}
         
-        # Add fuel type columns - need to map from Chinese+English to English
-        fuel_type_reverse_map = {
-            'Solar': ['Solar', '太陽能(Solar)'],
-            'Wind': ['Wind', '風力(Wind)'],
-            'Coal': ['Coal', '燃煤(Coal)'],
-            'LNG': ['LNG', '燃氣(LNG)'],
-            'Hydro': ['Hydro', '水力(Hydro)'],
-            'Nuclear': ['Nuclear', '核能(Nuclear)'],
-            'Co-Gen': ['Co-Gen', '汽電共生(Co-Gen)'],
-            'IPP-Coal': ['IPP-Coal', '民營電廠-燃煤(IPP-Coal)'],
-            'IPP-LNG': ['IPP-LNG', '民營電廠-燃氣(IPP-LNG)'],
-            'Oil': ['Oil', '燃油(Oil)'],
-            'Diesel': ['Diesel', '輕油(Diesel)'],
-            'Other_Renewable': ['Other_Renewable', '其它再生能源(Other Renewable Energy)'],
-            'Storage': ['Storage', '儲能(Energy Storage System)']
-        }
-        
         for fuel_type in ALL_FUEL_TYPES:
-            # Find matching fuel types from both English and Chinese names
-            possible_names = fuel_type_reverse_map.get(fuel_type, [fuel_type])
-            fuel_value = 0
-            for name in possible_names:
-                fuel_value += region_data[region_data['FUEL_TYPE'] == name]['NET_P'].sum()
-            row_data[fuel_type] = fuel_value
+            row_data[fuel_type] = region_data[region_data['FUEL_TYPE'] == fuel_type]['NET_P'].sum()
         
-        # Calculate total generation
         row_data['Total_Generation'] = sum(row_data[ft] for ft in ALL_FUEL_TYPES)
         
-        # Initialize weather columns as null
         row_data['AirTemperature'] = None
         row_data['WindSpeed'] = None
         row_data['SunshineDuration'] = None
         
-        # Check if file exists and if timestamp already exists
+        new_df = pd.DataFrame([row_data])
+
         if csv_path.exists():
             try:
                 existing_df = read_csv_with_lock(csv_path)
                 existing_df['Timestamp'] = pd.to_datetime(existing_df['Timestamp'])
                 
                 if timestamp in existing_df['Timestamp'].values:
-                    # Update existing row - preserve weather data if exists
                     idx = existing_df[existing_df['Timestamp'] == timestamp].index[0]
                     for col in ALL_FUEL_TYPES + ['Total_Generation']:
-                        existing_df.loc[idx, col] = row_data[col]
+                        existing_df.loc[idx, col] = new_df.loc[0, col]
                     write_csv_with_lock(existing_df, csv_path)
                     print(f"   ✅ Updated generation data for {region}")
                 else:
-                    # Append new row
-                    new_df = pd.DataFrame([row_data])
                     write_csv_with_lock(new_df, csv_path, mode='a')
                     print(f"   ✅ Appended generation data for {region}")
             except Exception as e:
                 print(f"   ❌ ERROR updating {region}: {e}")
-                # Create new file if read fails
-                new_df = pd.DataFrame([row_data])
                 write_csv_with_lock(new_df, csv_path)
-                print(f"   ✅ Created new file for {region}")
+                print(f"   ✅ Created new file for {region} after error.")
         else:
-            # Create new file
-            new_df = pd.DataFrame([row_data])
             write_csv_with_lock(new_df, csv_path)
             print(f"   ✅ Created new file for {region}")
 
-def log_fluctuations(current_units):
-    """Log plant fluctuations between runs."""
+def log_fluctuations(df_generation):
+    """
+    Logs plant fluctuations with details (region, power).
+    If no changes, logs a compact status line.
+    The state file now stores a dictionary of unit details for richer comparison.
+    """
+    run_time = datetime.now(TAIWAN_TZ)
+    
+    previous_units_data = {}
     if STATE_FILE.exists():
         try:
-            with open(STATE_FILE, 'r') as f:
-                previous_units = set(json.load(f))
-        except:
-            previous_units = set()
-    else:
-        previous_units = set()
+            with open(STATE_FILE, 'r', encoding='utf-8') as f:
+                previous_units_data = json.load(f)
+        except json.JSONDecodeError:
+            print(f"   -> WARNING: Could not read {STATE_FILE.name}. Assuming fresh start.")
+            previous_units_data = {}
     
-    added = current_units - previous_units
-    removed = previous_units - current_units
+    previous_names = set(previous_units_data.keys())
+
+    agg_df = df_generation.groupby(['UNIT_NAME', 'REGION'], as_index=False)['NET_P'].sum()
+    current_units_data = agg_df.set_index('UNIT_NAME')[['REGION', 'NET_P']].to_dict('index')
     
-    if added or removed:
-        with open(LOG_FILE, 'a', encoding='utf-8') as f:
-            f.write(f"\n--- Fluctuation Report @ {datetime.now(TAIWAN_TZ).strftime('%Y-%m-%d %H:%M:%S')} ---\n")
-            if added:
-                f.write(f"➕ ADDED ({len(added)}): {', '.join(sorted(added))}\n")
-            if removed:
-                f.write(f"➖ REMOVED ({len(removed)}): {', '.join(sorted(removed))}\n")
+    current_names = set(current_units_data.keys())
     
-    # Save current state
-    with open(STATE_FILE, 'w') as f:
-        json.dump(list(current_units), f, ensure_ascii=False, indent=2)
+    added_names = current_names - previous_names
+    removed_names = previous_names - current_names
+    
+    with open(LOG_FILE, 'a', encoding='utf-8') as f:
+        if not added_names and not removed_names:
+            f.write(f"[{run_time.strftime('%Y-%m-%d %H:%M')}] run no change\n")
+        else:
+            f.write(f"\n--- Fluctuation Report @ {run_time.strftime('%Y-%m-%d %H:%M:%S')} ---\n")
+            if added_names:
+                for name in sorted(list(added_names)):
+                    details = current_units_data[name]
+                    region = details.get('REGION', 'N/A')
+                    net_p = details.get('NET_P', 0.0)
+                    f.write(f"➕ ADDED: {name:<20} | Region: {region:<8} | Power: {net_p: >6.1f} MW\n")
+            if removed_names:
+                for name in sorted(list(removed_names)):
+                    details = previous_units_data.get(name, {}) 
+                    region = details.get('REGION', 'N/A')
+                    last_net_p = details.get('NET_P', 0.0)
+                    f.write(f"➖ GONE:  {name:<20} | Region: {region:<8} | Last Power: {last_net_p: >6.1f} MW\n")
+
+    with open(STATE_FILE, 'w', encoding='utf-8') as f:
+        json.dump(current_units_data, f, ensure_ascii=False, indent=2)
 
 def main():
     """Main execution function."""
@@ -413,10 +327,8 @@ def main():
     print(f"\n{'='*60}")
     print(f"[{run_time.strftime('%Y-%m-%d %H:%M:%S')}] Starting integrated pipeline...")
     
-    # Ensure directories exist
     ensure_directories()
     
-    # Fetch generation data
     df_generation, timestamp = fetch_generation_data()
     if df_generation is None:
         print("❌ Failed to fetch generation data. Exiting.")
@@ -425,15 +337,11 @@ def main():
     print(f"   ✅ Fetched {len(df_generation)} generation units")
     print(f"   ✅ Data timestamp: {timestamp}")
     
-    # Update regional CSV files
     update_regional_data(df_generation, timestamp)
     
-    # Fetch demand data
     fetch_demand_data(timestamp)
     
-    # Log fluctuations
-    current_units = set(df_generation['UNIT_NAME'].unique())
-    log_fluctuations(current_units)
+    log_fluctuations(df_generation)
     
     print(f"[{datetime.now(TAIWAN_TZ).strftime('%Y-%m-%d %H:%M:%S')}] Pipeline completed successfully!")
     print(f"{'='*60}\n")
