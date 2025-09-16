@@ -188,3 +188,9 @@
 ➕ ADDED: 龍澗#2                 | Region: East     | Power:   32.8 MW
 [2025-08-19 10:03] run no change
 [2025-08-19 11:13] run no change
+
+--- Fluctuation Report @ 2025-09-03 14:26:46 ---
+➖ GONE:  核三#2                 | Region: South    | Last Power:    0.0 MW
+➖ GONE:  海湖#2                 | Region: North    | Last Power:    0.0 MW
+[2025-09-03 14:26] run no change
+[2025-09-03 14:40] run no change

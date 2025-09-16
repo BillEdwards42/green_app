@@ -1,15 +1,15 @@
 {
   "中威大安": {
-    "REGION": "Central",
-    "NET_P": 2.3
+    "REGION": "Other",
+    "NET_P": 0.3
   },
   "中能風": {
     "REGION": "Central",
-    "NET_P": 0.0
+    "NET_P": 4.2
   },
   "中部小水力": {
     "REGION": "Central",
-    "NET_P": 15.1
+    "NET_P": 10.9
   },
   "允湖": {
     "REGION": "Other",
@@ -21,19 +21,19 @@
   },
   "其它台電自有": {
     "REGION": "Other",
-    "NET_P": 9.252
+    "NET_P": 6.198
   },
   "其它購電太陽能": {
     "REGION": "Other",
-    "NET_P": 7342.176
+    "NET_P": 6042.114
   },
   "其它購電風力": {
     "REGION": "Other",
-    "NET_P": 3.0
+    "NET_P": 1.6
   },
   "創維風": {
-    "REGION": "Central",
-    "NET_P": 1.8
+    "REGION": "Other",
+    "NET_P": 2.1
   },
   "北部小水力": {
     "REGION": "North",
@@ -44,12 +44,12 @@
     "NET_P": 0.0
   },
   "卓蘭#1": {
-    "REGION": "Central",
-    "NET_P": 18.2
+    "REGION": "Other",
+    "NET_P": 26.0
   },
   "卓蘭#2": {
-    "REGION": "Central",
-    "NET_P": 17.4
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "協和#3": {
     "REGION": "North",
@@ -57,35 +57,35 @@
   },
   "協和#4": {
     "REGION": "North",
-    "NET_P": 139.8
+    "NET_P": 139.0
   },
   "南部CC#1": {
     "REGION": "South",
-    "NET_P": 198.4
+    "NET_P": 194.9
   },
   "南部CC#2": {
     "REGION": "South",
-    "NET_P": 220.6
+    "NET_P": 214.3
   },
   "南部CC#3": {
     "REGION": "South",
-    "NET_P": 249.6
+    "NET_P": 249.2
   },
   "南部CC#4": {
     "REGION": "South",
-    "NET_P": 191.9
+    "NET_P": 197.2
   },
   "南部小水力": {
     "REGION": "South",
-    "NET_P": 4.1
+    "NET_P": 1.7
   },
   "南鹽光": {
-    "REGION": "South",
-    "NET_P": 81.995
+    "REGION": "Other",
+    "NET_P": 86.208
   },
   "台中#1": {
     "REGION": "Central",
-    "NET_P": 432.4
+    "NET_P": 505.7
   },
   "台中#10": {
     "REGION": "Central",
@@ -93,39 +93,39 @@
   },
   "台中#2": {
     "REGION": "Central",
-    "NET_P": 226.9
+    "NET_P": 513.0
   },
   "台中#3": {
     "REGION": "Central",
-    "NET_P": 447.1
+    "NET_P": 512.1
   },
   "台中#4": {
     "REGION": "Central",
-    "NET_P": 434.7
+    "NET_P": 503.7
   },
   "台中#5": {
     "REGION": "Central",
-    "NET_P": 445.1
+    "NET_P": 524.2
   },
   "台中#6": {
     "REGION": "Central",
-    "NET_P": 453.3
+    "NET_P": 505.0
   },
   "台中#7": {
     "REGION": "Central",
-    "NET_P": 420.1
+    "NET_P": 477.9
   },
   "台中#8": {
     "REGION": "Central",
-    "NET_P": 420.6
+    "NET_P": 520.4
   },
   "台中#9": {
     "REGION": "Central",
-    "NET_P": 437.6
+    "NET_P": 439.0
   },
   "台中CC#1": {
     "REGION": "Central",
-    "NET_P": 0.0
+    "NET_P": 22.0
   },
   "台中Gas1&amp;2": {
     "REGION": "Central",
@@ -140,52 +140,52 @@
     "NET_P": 0.0
   },
   "台電自有地熱": {
-    "REGION": "East",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 0.4
   },
   "名間": {
-    "REGION": "Central",
-    "NET_P": 11.4
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "向陽光": {
     "REGION": "Other",
-    "NET_P": 125.896
+    "NET_P": 97.975
   },
   "和平#1": {
     "REGION": "East",
-    "NET_P": 574.1
+    "NET_P": 600.1
   },
   "和平#2": {
     "REGION": "East",
-    "NET_P": 564.9
+    "NET_P": 573.4
   },
   "嘉南西口、烏山頭和八田": {
-    "REGION": "South",
-    "NET_P": 18.0
+    "REGION": "Other",
+    "NET_P": 14.8
   },
   "嘉惠#1": {
-    "REGION": "South",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 687.0
   },
   "嘉惠#2": {
-    "REGION": "South",
-    "NET_P": 490.0
+    "REGION": "Other",
+    "NET_P": 486.0
   },
   "四湖": {
-    "REGION": "Central",
-    "NET_P": 0.4
+    "REGION": "Other",
+    "NET_P": 1.1
   },
   "國光#1": {
     "REGION": "North",
-    "NET_P": 429.4
+    "NET_P": 0.0
   },
   "大林#1": {
     "REGION": "South",
-    "NET_P": 760.1
+    "NET_P": 381.4
   },
   "大林#2": {
     "REGION": "South",
-    "NET_P": 755.5
+    "NET_P": 757.9
   },
   "大林#5": {
     "REGION": "South",
@@ -193,7 +193,7 @@
   },
   "大林#6": {
     "REGION": "South",
-    "NET_P": 293.4
+    "NET_P": 496.8
   },
   "大潭CC#1": {
     "REGION": "North",
@@ -201,155 +201,155 @@
   },
   "大潭CC#2": {
     "REGION": "North",
-    "NET_P": 697.8
+    "NET_P": 671.9
   },
   "大潭CC#3": {
     "REGION": "North",
-    "NET_P": 635.6
+    "NET_P": 609.3
   },
   "大潭CC#4": {
     "REGION": "North",
-    "NET_P": 639.7
+    "NET_P": 653.4
   },
   "大潭CC#5": {
     "REGION": "North",
-    "NET_P": 608.8
+    "NET_P": 672.0
   },
   "大潭CC#6": {
     "REGION": "North",
-    "NET_P": 664.8
+    "NET_P": 687.2
   },
   "大潭CC#7": {
     "REGION": "North",
-    "NET_P": 685.7
+    "NET_P": 884.7
   },
   "大潭CC#8": {
     "REGION": "North",
-    "NET_P": 1054.2
+    "NET_P": 1043.6
   },
   "大潭CC#9": {
     "REGION": "North",
-    "NET_P": 1074.7
+    "NET_P": 1064.4
   },
   "大觀一#1": {
-    "REGION": "Central",
-    "NET_P": 19.8
+    "REGION": "Other",
+    "NET_P": 4.7
   },
   "大觀一#2": {
-    "REGION": "Central",
-    "NET_P": 19.5
+    "REGION": "Other",
+    "NET_P": 5.4
   },
   "大觀一#3": {
-    "REGION": "Central",
-    "NET_P": 20.0
+    "REGION": "Other",
+    "NET_P": 5.0
   },
   "大觀一#4": {
-    "REGION": "Central",
-    "NET_P": 19.9
+    "REGION": "Other",
+    "NET_P": 5.5
   },
   "大觀一#5": {
-    "REGION": "Central",
-    "NET_P": 19.1
+    "REGION": "Other",
+    "NET_P": 5.3
   },
   "大觀二#1": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "大觀二#2": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "大觀二#3": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "大觀二#4": {
-    "REGION": "Central",
-    "NET_P": 159.3
+    "REGION": "Other",
+    "NET_P": 144.5
   },
   "天篷光": {
-    "REGION": "South",
-    "NET_P": 55.44
+    "REGION": "Other",
+    "NET_P": 46.48
   },
   "天英光": {
     "REGION": "Other",
-    "NET_P": 79.24
+    "NET_P": 78.4
   },
   "天衝光": {
-    "REGION": "South",
-    "NET_P": 128.24
+    "REGION": "Other",
+    "NET_P": 139.44
   },
   "天輪#1": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "天輪#2": {
-    "REGION": "Central",
-    "NET_P": 12.0
+    "REGION": "Other",
+    "NET_P": 7.5
   },
   "天輪#3": {
-    "REGION": "Central",
-    "NET_P": 14.3
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "天輪#4": {
-    "REGION": "Central",
-    "NET_P": 13.5
+    "REGION": "Other",
+    "NET_P": 9.9
   },
   "天輪#5": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "寶興光": {
     "REGION": "Other",
-    "NET_P": 36.4
+    "NET_P": 22.12
   },
   "崙尾光": {
-    "REGION": "Central",
-    "NET_P": 169.68
+    "REGION": "Other",
+    "NET_P": 138.32
   },
   "廷和光": {
     "REGION": "Other",
-    "NET_P": 37.24
+    "NET_P": 28.84
   },
   "彰工": {
     "REGION": "Central",
-    "NET_P": 0.9
+    "NET_P": 2.0
   },
   "彰濱光": {
     "REGION": "Central",
-    "NET_P": 69.16
+    "NET_P": 58.94
   },
   "德基#1": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "德基#2": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "德基#3": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "志光光": {
     "REGION": "Other",
-    "NET_P": 13.16
+    "NET_P": 36.4
   },
   "捷祥關山": {
-    "REGION": "East",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "新和光": {
     "REGION": "Other",
-    "NET_P": 66.08
+    "NET_P": 59.64
   },
   "新桃#1": {
     "REGION": "North",
-    "NET_P": 634.9
+    "NET_P": 635.4
   },
   "新源崙背": {
-    "REGION": "Central",
-    "NET_P": 1.7
+    "REGION": "Other",
+    "NET_P": 1.8
   },
   "明潭#1": {
     "REGION": "Central",
@@ -357,7 +357,7 @@
   },
   "明潭#2": {
     "REGION": "Central",
-    "NET_P": 181.0
+    "NET_P": 0.0
   },
   "明潭#3": {
     "REGION": "Central",
@@ -369,63 +369,59 @@
   },
   "明潭#5": {
     "REGION": "Central",
-    "NET_P": 0.0
+    "NET_P": 145.3
   },
   "明潭#6": {
     "REGION": "Central",
     "NET_P": 0.0
   },
   "星元#1": {
-    "REGION": "Central",
-    "NET_P": 462.3
+    "REGION": "Other",
+    "NET_P": 453.6
   },
   "星崙光": {
     "REGION": "Other",
-    "NET_P": 101.08
+    "NET_P": 91.0
   },
   "星崴光": {
     "REGION": "Other",
-    "NET_P": 33.32
+    "NET_P": 45.64
   },
   "星彰#1": {
     "REGION": "Central",
-    "NET_P": 449.3
+    "NET_P": 0.0
   },
   "星股光": {
     "REGION": "Other",
-    "NET_P": 19.32
+    "NET_P": 24.64
   },
   "昱昶光": {
     "REGION": "Other",
-    "NET_P": 27.0
+    "NET_P": 19.35
   },
   "曾文#1": {
     "REGION": "South",
-    "NET_P": 49.5
+    "NET_P": 49.9
   },
   "東部小水力": {
     "REGION": "East",
-    "NET_P": 33.5
+    "NET_P": 32.7
   },
   "松林#1&amp;2": {
-    "REGION": "East",
-    "NET_P": 2.5
+    "REGION": "Other",
+    "NET_P": 1.3
   },
   "林口#1": {
     "REGION": "North",
-    "NET_P": 746.7
+    "NET_P": 746.4
   },
   "林口#2": {
     "REGION": "North",
-    "NET_P": 756.1
+    "NET_P": 744.5
   },
   "林口#3": {
     "REGION": "North",
-    "NET_P": 754.0
-  },
-  "核三#2": {
-    "REGION": "South",
-    "NET_P": 0.0
+    "NET_P": 748.1
   },
   "核三Gas1": {
     "REGION": "South",
@@ -436,31 +432,31 @@
     "NET_P": 0.0
   },
   "核二Gas1": {
-    "REGION": "North",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "核二Gas2": {
-    "REGION": "North",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "水里#1": {
     "REGION": "Central",
-    "NET_P": 3.3
+    "NET_P": 0.0
   },
   "永堯光": {
     "REGION": "Other",
-    "NET_P": 36.176
+    "NET_P": 29.568
   },
   "汽電共生": {
     "REGION": "Other",
-    "NET_P": 1465.3
+    "NET_P": 1906.2
   },
   "沃一風": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "沃二風": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "沃南風": {
@@ -473,35 +469,31 @@
   },
   "海湖#1": {
     "REGION": "North",
-    "NET_P": 441.9
-  },
-  "海湖#2": {
-    "REGION": "North",
-    "NET_P": 0.0
+    "NET_P": 438.7
   },
   "海能風": {
-    "REGION": "Central",
-    "NET_P": 4.8
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "澎湖尖山": {
     "REGION": "Islands",
-    "NET_P": 61.1
+    "NET_P": 56.7
   },
   "烏來&amp;桂山&amp;粗坑": {
     "REGION": "North",
-    "NET_P": 20.7
+    "NET_P": 10.0
   },
   "王功": {
-    "REGION": "Central",
-    "NET_P": 0.6
+    "REGION": "Other",
+    "NET_P": 1.3
   },
   "生利光": {
     "REGION": "Other",
-    "NET_P": 35.84
+    "NET_P": 22.4
   },
   "生質能": {
     "REGION": "Other",
-    "NET_P": 34.4
+    "NET_P": 36.2
   },
   "石門#1": {
     "REGION": "North",
@@ -509,23 +501,23 @@
   },
   "石門#2": {
     "REGION": "North",
-    "NET_P": 32.8
+    "NET_P": 0.0
   },
   "碧海": {
-    "REGION": "East",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 29.7
   },
   "碩力光": {
     "REGION": "Other",
-    "NET_P": 174.352
+    "NET_P": 178.296
   },
   "立霧#1&amp;#2": {
     "REGION": "East",
     "NET_P": 0.0
   },
   "義興#1": {
-    "REGION": "North",
-    "NET_P": 27.1
+    "REGION": "Other",
+    "NET_P": 24.9
   },
   "翡翠#1": {
     "REGION": "North",
@@ -533,7 +525,7 @@
   },
   "聯華光": {
     "REGION": "Other",
-    "NET_P": 128.64
+    "NET_P": 113.28
   },
   "興達#1": {
     "REGION": "South",
@@ -553,170 +545,170 @@
   },
   "興達CC#1": {
     "REGION": "South",
-    "NET_P": 301.4
+    "NET_P": 330.6
   },
   "興達CC#2": {
     "REGION": "South",
-    "NET_P": 332.0
+    "NET_P": 331.7
   },
   "興達CC#3": {
     "REGION": "South",
-    "NET_P": 392.7
+    "NET_P": 391.9
   },
   "興達CC#4": {
     "REGION": "South",
-    "NET_P": 299.9
+    "NET_P": 448.0
   },
   "興達CC#5": {
     "REGION": "South",
-    "NET_P": 429.7
+    "NET_P": 424.5
   },
   "興達新CC#1": {
     "REGION": "South",
-    "NET_P": 1276.4
+    "NET_P": 1262.1
   },
   "興達新CC#2": {
     "REGION": "South",
-    "NET_P": 0.0
+    "NET_P": 234.5
   },
   "芳一風": {
-    "REGION": "Central",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 2.0
   },
   "芳二風": {
-    "REGION": "Central",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 4.5
   },
   "苗栗大鵬": {
     "REGION": "Central",
-    "NET_P": 0.7
+    "NET_P": 0.0
   },
   "萬大#1": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "萬大#2": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "萬大#3": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "萬大#4": {
-    "REGION": "Central",
-    "NET_P": 19.6
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "觀園": {
-    "REGION": "North",
-    "NET_P": 2.1
+    "REGION": "Other",
+    "NET_P": 0.2
   },
   "觀威觀音&amp;桃威新屋": {
     "REGION": "North",
-    "NET_P": 1.9
+    "NET_P": 0.0
   },
   "谷關#1": {
-    "REGION": "Central",
-    "NET_P": 26.9
+    "REGION": "Other",
+    "NET_P": 7.2
   },
   "谷關#2": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "谷關#3": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "谷關#4": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "豐德#1": {
-    "REGION": "Central",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 443.3
   },
   "豐德#2": {
-    "REGION": "Central",
-    "NET_P": 444.9
+    "REGION": "Other",
+    "NET_P": 212.6
   },
   "豐德#3": {
-    "REGION": "Central",
-    "NET_P": 1012.2
+    "REGION": "Other",
+    "NET_P": 1007.3
   },
   "購電地熱": {
-    "REGION": "East",
-    "NET_P": 2.4
+    "REGION": "Other",
+    "NET_P": 0.8
   },
   "通霄CC#1": {
-    "REGION": "Central",
-    "NET_P": 848.2
+    "REGION": "North",
+    "NET_P": 840.5
   },
   "通霄CC#2": {
-    "REGION": "Central",
-    "NET_P": 868.9
+    "REGION": "North",
+    "NET_P": 857.0
   },
   "通霄CC#3": {
-    "REGION": "Central",
-    "NET_P": 868.7
+    "REGION": "North",
+    "NET_P": 857.0
   },
   "通霄CC#6": {
-    "REGION": "Central",
-    "NET_P": 265.4
+    "REGION": "North",
+    "NET_P": 267.2
   },
   "通霄GT#9": {
-    "REGION": "Central",
+    "REGION": "North",
     "NET_P": 0.0
   },
   "金門塔山": {
     "REGION": "Islands",
-    "NET_P": 40.2
+    "NET_P": 43.3
   },
   "鉅工#1": {
-    "REGION": "Central",
-    "NET_P": 16.7
+    "REGION": "Other",
+    "NET_P": 2.9
   },
   "鉅工#2": {
-    "REGION": "Central",
-    "NET_P": 20.4
+    "REGION": "Other",
+    "NET_P": 5.9
   },
   "離岸一期": {
-    "REGION": "Central",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 2.5
   },
   "雲麥": {
-    "REGION": "Central",
-    "NET_P": 0.9
+    "REGION": "Other",
+    "NET_P": 1.6
   },
   "電池": {
     "REGION": "Other",
-    "NET_P": 0.0
+    "NET_P": 9.1
   },
   "青山#1": {
-    "REGION": "Central",
-    "NET_P": 9.6
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "青山#2": {
-    "REGION": "Central",
-    "NET_P": 9.9
+    "REGION": "Other",
+    "NET_P": 0.0
   },
   "青山#3": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "青山#4": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "馬祖珠山": {
     "REGION": "Islands",
-    "NET_P": 10.9
+    "NET_P": 10.8
   },
   "馬鞍#1": {
-    "REGION": "Central",
-    "NET_P": 44.8
+    "REGION": "Other",
+    "NET_P": 18.7
   },
   "馬鞍#2": {
-    "REGION": "Central",
+    "REGION": "Other",
     "NET_P": 0.0
   },
   "鹿威彰濱": {
@@ -725,22 +717,22 @@
   },
   "麥寮#1": {
     "REGION": "Central",
-    "NET_P": 442.7
+    "NET_P": 515.9
   },
   "麥寮#3": {
     "REGION": "Central",
-    "NET_P": 472.7
+    "NET_P": 566.8
   },
   "龍A風": {
     "REGION": "Other",
     "NET_P": 0.0
   },
   "龍澗#1": {
-    "REGION": "East",
-    "NET_P": 0.0
+    "REGION": "Other",
+    "NET_P": 16.3
   },
   "龍澗#2": {
-    "REGION": "East",
-    "NET_P": 32.8
+    "REGION": "Other",
+    "NET_P": 0.0
   }
 }
